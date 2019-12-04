@@ -56,8 +56,8 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
-    - _BlockSizeX: 7.76
-    - _BlockSizeY: 35.52
+    - _BlockSizeX: 7.12
+    - _BlockSizeY: 113.06
     - _BumpScale: 1
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
@@ -72,7 +72,7 @@ Material:
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
-    - _Threshold: 0.72
+    - _Threshold: 0.96
     - _UVSec: 0
     - _ZWrite: 1
     m_Colors:

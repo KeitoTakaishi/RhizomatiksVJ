@@ -45,7 +45,7 @@ public class CameraController : MonoBehaviour
 
     void Start()
     {
-        
+        startPosition = this.transform.position;
     }
 
     void Update()
