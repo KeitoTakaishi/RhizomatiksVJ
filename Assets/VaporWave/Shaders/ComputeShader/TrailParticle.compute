@@ -1,14 +1,47 @@
-﻿// Each #kernel tells which function to compile; you can have many kernels
-#pragma kernel CSMain
+﻿#pragma kernel update
+#define BLOCK_SIZE 64
+#include "../Noise4d.cginc"
 
-// Create a RenderTexture with enableRandomWrite flag and set it
-// with cs.SetTexture
-RWTexture2D<float4> Result;
+RWStructuredBuffer<float3> positionBuffer;
+RWStructuredBuffer<float3> velocityBuffer;
+float dt;
+float time;
 
-[numthreads(8,8,1)]
-void CSMain (uint3 id : SV_DispatchThreadID)
+[numthreads(BLOCK_SIZE, 1, 1)]
+
+void update(uint2 id : SV_DispatchThreadID)
 {
-    // TODO: insert actual code here!
+	uint idx = id.x;
+	if (fmod(idx, BLOCK_SIZE) == 0) {
+		//top
+		float3 pos = positionBuffer[idx];
+		float3 vel = velocityBuffer[idx];
+		int row = (int)(idx / BLOCK_SIZE);
 
-    Result[id.xy] = float4(id.x & id.y, (id.x & 15)/15.0, (id.y & 15)/15.0, 0.0);
+		float3 freq = float3(0.01, 0.01, 0.01);
+		vel.xyz += 8.0 * float3(
+			snoise(float4(freq.x * pos.x, freq.y * pos.y, freq.z * pos.z, 722.5 + (idx + 1) + time)),
+			snoise(float4(freq.x * pos.x, freq.y * pos.y, freq.z * pos.z, 355.3 + (idx + 1) * 100.0 + time)),
+			snoise(float4(freq.x * pos.x, freq.y * pos.y, freq.z * pos.z, 125.9 + (idx + 1) * 200.0 + time)));
+
+
+		float3 bPos = pos - float3(0.0, 0.0, 0.0);
+
+		vel += -(bPos)* length(bPos) * 0.15;
+		vel.xyz *= 0.1 + abs(sin(row * 3234.0)) * 0.3;
+
+		if (pos.y < -10.0) {
+			vel.y += 15.0;
+		}
+		else if (pos.y > 10.0) {
+			vel.y -= 15.0;
+		}
+
+		pos += vel * 0.01;
+		velocityBuffer[idx] = vel;
+		positionBuffer[idx] = pos;
+	}
+	else {
+		positionBuffer[idx] = positionBuffer[idx - 1];
+	}
 }

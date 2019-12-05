@@ -18,6 +18,7 @@
 		#pragma multi_compile_instancing
 		#pragma instancing_options procedural:setup
 		#pragma target 3.0
+		#include "../utils.cginc"
 
 		sampler2D _MainTex;
 
@@ -53,25 +54,36 @@
 		int NumPerFace;
 		void vert(inout appdata v) {
 #ifdef UNITY_PROCEDURAL_INSTANCING_ENABLED
-			int _instanceID = (int)v.instanceID;
+			uint _instanceID = (int)v.instanceID;
 			int _vid = (int)v.vertexID;
 
 			float4 vert = v.vertex;
 			float2 uv = v.texcoord.xy;
-			
 
 
-			//indexの振り方に気を付ける
-			//int newVertexID = _vid / NumPerFace;
-			//newVertexID = (int)(fmod((float)(newVertexID), BLOCK_SIZE)) + (_instanceID)* BLOCK_SIZE;
-			//float3 offSet = positionBuffer[newVertexID].xyz;
 
-			float3 offSet = float3(0.0, 3.0 + 0.1 * sin(_Time.y + vert.x * 10.0), 0.0);
-			float4x4 object2world = (float4x4)0.0;
-			object2world._11_22_33_44 = float4(1.0.xxxx);
-			object2world._14_24_34 += offSet.xyz;
 
-			vert = mul(object2world, vert);
+
+			int newVertexID = _vid / 2;
+			newVertexID = (int)(fmod((float)(_vid / 2), BLOCK_SIZE)) + (_instanceID)* BLOCK_SIZE;
+
+			if (fmod(_vid, BLOCK_SIZE) != 0.0) {
+				float3 dir = positionBuffer[newVertexID - 1] - positionBuffer[newVertexID];
+				float theta = atan2(dir.y, dir.z);
+				vert = mul(RotXMatrix(theta), vert);
+			}
+			else {
+				float theta = atan2(positionBuffer[newVertexID].y, positionBuffer[newVertexID].z);
+				vert = mul(RotXMatrix(theta), vert);
+			}
+
+			float3 pos = positionBuffer[newVertexID];
+
+			//float4x4 object2world = (float4x4)0.0;
+			//object2world._11_22_33_44 = float4(1.0.xxxx);
+			//object2world._14_24_34 += offSet.xyz;
+			//vert = mul(object2world, vert);
+			vert = mul(TranslateMatrix(pos), vert);
 			v.vertex = vert;
 #endif
 		}

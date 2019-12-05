@@ -40,15 +40,24 @@ public class GPUTrail : MonoBehaviour
         CreateMesh();
         initInstancingParameter();
         initBuffer();
+        kernel = cs.FindKernel("update");
     }
 
     void Update()
     {
 
+        cs.SetBuffer(kernel, "positionBuffer", positionBuffer);
+        cs.SetBuffer(kernel, "velocityBuffer", velocityBuffer);
+        cs.SetFloat("dt", Time.deltaTime);
+        cs.SetFloat("time", Time.realtimeSinceStartup);
+        cs.Dispatch(kernel, BLOCK_SIZE, 1, 1);
+
+
         //Graphics.DrawMeshInstancedIndirect(srcMesh, 0, instancingMat,
         //new Bounds(Vector3.zero, Vector3.one * 32.0f), argsBuffer, 0, null, UnityEngine.Rendering.ShadowCastingMode.ShadowsOnly, true, 0);
 
-
+        instancingMat.SetBuffer("positionBuffer", positionBuffer);
+        instancingMat.SetInt("BLOCK_SIZE", BLOCK_SIZE);
         Graphics.DrawMeshInstancedIndirect(srcMesh, 0, instancingMat,
         new Bounds(Vector3.zero, Vector3.one * 32.0f), argsBuffer);
     }
@@ -124,17 +133,16 @@ public class GPUTrail : MonoBehaviour
         List<Vector3> p = new List<Vector3>();
         List<Vector3> v = new List<Vector3>();
 
-        positionBuffer = new ComputeBuffer(trailNum * trailLength, sizeof(float) * 3);
-        velocityBuffer = new ComputeBuffer(trailNum * trailLength, sizeof(float) * 3);
+        positionBuffer = new ComputeBuffer(trailNum * BLOCK_SIZE, sizeof(float) * 3);
+        velocityBuffer = new ComputeBuffer(trailNum * BLOCK_SIZE, sizeof(float) * 3);
 
 
         for(int i = 0; i < trailNum; i++)
         {
             for(int j = 0; j < trailLength; j++)
             {
-                p.Add(Random.insideUnitSphere * 10.0f);
+                p.Add(Random.insideUnitSphere * 0.0f);
                 v.Add(Random.insideUnitSphere * 3.0f);
-
             }
         }
         positionBuffer.SetData(p);

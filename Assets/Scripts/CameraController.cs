@@ -59,7 +59,15 @@ public class CameraController : MonoBehaviour
                 t = v = 0;
                 curTime = 0;
                 startPosition = camera.transform.position;
-                nextPosition = nextPos(radius);
+
+                if(Random.Range(0.0f, 1.0f) < 0.75f) {
+                    nextPosition = SpereRandomNextPos(radius);
+                } else
+                {
+                    nextPosition = ForwardNextPos();
+                }
+                
+
                 dir = nextPosition - startPosition;
 
             }
@@ -117,19 +125,26 @@ public class CameraController : MonoBehaviour
         return t;
     }
 
-    Vector3 nextPos(float radius)
+    Vector3 SpereRandomNextPos(float radius)
     {
-
-        var nextPos = Random.insideUnitSphere * radius;
-
+        
+        var nextPos = Random.insideUnitSphere;
+        
         if(isUp)
         {
-            while(nextPos.y <= 0.0)
+            while(nextPos.y <= 0.0f)
             {
-                nextPos = Random.insideUnitSphere * radius;
-            }
+                nextPos = Random.insideUnitSphere;
+            }   
         }
+        nextPos = nextPos * radius + target.transform.position;
+        return nextPos;
+    }
 
+    Vector3 ForwardNextPos()
+    {
+        var ratio = Random.Range(0.0f, 0.5f);
+        var nextPos = (target.transform.position - this.transform.position) * ratio + startPosition;
         return nextPos;
     }
 
