@@ -82,15 +82,16 @@
 
 
 				float2 offset[9];
-				offset[0] = float2(-1.0, -1.0);
-				offset[1] = float2(0.0, -1.0);
-				offset[2] = float2(1.0, -1.0);
-				offset[3] = float2(-1.0, 0.0);
+				float b = 3.0;
+				offset[0] = float2(-b, -b);
+				offset[1] = float2(0.0, -b);
+				offset[2] = float2(b, -b);
+				offset[3] = float2(-b, 0.0);
 				offset[4] = float2(0.0, 0.0);
-				offset[5] = float2(1.0, 0.0);
-				offset[6] = float2(-1.0, 1.0);
-				offset[7] = float2(0.0, 1.0);
-				offset[8] = float2(1.0, 1.0);
+				offset[5] = float2(b, 0.0);
+				offset[6] = float2(-b, b);
+				offset[7] = float2(0.0, b);
+				offset[8] = float2(b, b);
 
 				fixed4 col = fixed4(0.0, 0.0, 0.0, 0.0);
 
@@ -108,13 +109,24 @@
 				col += tex2D(_MainTex, (fc + offset[8]) * tFrag) * _coef[8];
 
 
-				float2 newUV = float2(frac(_Time.x*15.0), 0.0) + uv;
+				
+				
+				//float2 newUV = float2( min(uv.x, frac(_Time.x)), 0.0) + uv;
 				//newUV = floor(newUV * 5.0) / 5.0;
-				float disp = tex2D(_Tex1 , float2( newUV.x, newUV.y ));
-				uv += disp;
-				uv.x = frac(uv.x);
-				col += tex2D(_MainTex, uv);
-
+				float disp = tex2D(_Tex1, float2(uv.x, frac(uv.y * 5.0)));
+				
+				
+				//float dir = step(_power, 1.5);
+				//uv += disp * float2(dir*frac(_Time.y), (1.0 - dir) * frac(_Time.y))*_power;
+				
+				for (int i = 0; i < 10.0; i++) {
+					uv.x += disp * _power;
+					col *= 0.8;
+					col += tex2D(_MainTex, uv);
+				}
+				col /= 2.0;
+				
+				
 				return col;
 			}
             ENDCG

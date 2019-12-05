@@ -27,17 +27,19 @@ public class Distortion : MonoBehaviour
     {
         if(isDoing)
         {
-            value = easing.easeOutCubic((float)curTime / (float)duration) * amp;
+            value = easing.easeInOutQuad((float)curTime / (float)duration) * amp;
             mat.SetFloat("_power", value);
+            
             if(isUp)
             {
                 curTime++;
                 if(curTime > duration) isUp = false;
             } else if(!isUp)
             {
-                curTime--;
+                curTime = curTime - 2;
                 if(curTime < 0) isDoing = false;
             }
+            
         } else
         {
             curTime = 0;
@@ -47,7 +49,7 @@ public class Distortion : MonoBehaviour
             {
                 isUp = true;
                 isDoing = true;
-                amp = Random.Range(0.0f, 10.0f);
+                amp = 1.0f;
             }
         }
     }

@@ -46,6 +46,8 @@ public class CameraController : MonoBehaviour
     void Start()
     {
         startPosition = this.transform.position;
+        camera.transform.position = dir * v + startPosition;
+        camera.transform.LookAt(target, Vector3.up);
     }
 
     void Update()
@@ -53,14 +55,14 @@ public class CameraController : MonoBehaviour
 
         if(isMoving == false)
         {
-            if(Input.GetKeyDown(KeyCode.A))
+            if(Input.GetKeyDown(KeyCode.A) || (target.position - this.transform.position).magnitude > 11f)
             {
                 isMoving = true;
                 t = v = 0;
                 curTime = 0;
                 startPosition = camera.transform.position;
 
-                if(Random.Range(0.0f, 1.0f) < 0.75f) {
+                if(Random.Range(0.0f, 1.0f) < 0.95f) {
                     nextPosition = SpereRandomNextPos(radius);
                 } else
                 {
@@ -71,6 +73,15 @@ public class CameraController : MonoBehaviour
                 dir = nextPosition - startPosition;
 
             }
+
+            
+            var time = Time.realtimeSinceStartup;
+            var vel = new Vector3(Mathf.PerlinNoise(this.transform.position.x, time), 
+                Mathf.PerlinNoise(this.transform.position.y, time)*0.04f,
+                Mathf.PerlinNoise(this.transform.position.z, time))*0.04f;
+            this.transform.position += vel;
+            this.transform.LookAt(target);
+            
         }
 
         
@@ -111,10 +122,11 @@ public class CameraController : MonoBehaviour
 
             curTime++;
             if(t > 1.0) isMoving = false;
+            camera.transform.position = dir * v + startPosition;
+            camera.transform.LookAt(target, Vector3.up);
         }
 
-        camera.transform.position = dir * v + startPosition;
-        camera.transform.LookAt(target, Vector3.up);
+        
     }
 
 
