@@ -50,21 +50,24 @@
             fixed4 frag (v2f i) : SV_Target
             {
 				float2 uv = i.uv;
+
+				float grayNoise = rnd(float2(uv.x + _Time.y, uv.y + _Time.x));
+
 				//_BlockSizeY = rnd(float2(uv.y * 30.0, _Time.y)) * 2.5;
 				float2 bUv = float2( floor(uv.x * _BlockSizeX) / _BlockSizeX, floor(uv.y * _BlockSizeY) / _BlockSizeY);
 				
 				//float noise = rnd(float2(bUv.x, _Time.y));
 				float noise = rnd(float2(bUv.y, _Time.x));
 
-				float2 offSet = float2(0.02, 0.0);
+				float2 offSet = float2(0.1 * noise, 0.0);
 				fixed4 col = tex2D(_MainTex, uv);
 				if (noise > _Threshold) {
 					col.r = tex2D(_MainTex, uv + offSet).r;
-					offSet = float2(-0.01, 0.0);
-					col.g = tex2D(_MainTex, uv + offSet).g;
+					offSet = float2(-0.1 * noise, 0.0);
+					col.b = tex2D(_MainTex, uv + offSet).b;
 				}
 
-				
+				//col.rgb *= grayNoise.x;
 
                 
                 
