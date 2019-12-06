@@ -75,14 +75,15 @@
 				
 				
 				float2 uv = i.uv;
+
+				
 				for (float i = 0.0; i < 9.0; i += 1.0) {
 					_coef[(int)i] = 1.0;
 				}
 				_coef[4] = -8.0;
 
-
 				float2 offset[9];
-				float b = 3.0;
+				float b = 1.0;
 				offset[0] = float2(-b, -b);
 				offset[1] = float2(0.0, -b);
 				offset[2] = float2(b, -b);
@@ -119,12 +120,12 @@
 				//float dir = step(_power, 1.5);
 				//uv += disp * float2(dir*frac(_Time.y), (1.0 - dir) * frac(_Time.y))*_power;
 				
-				for (int i = 0; i < 10.0; i++) {
+				col *= 0.8;
+				for (int i = 0; i < 5.0; i++) {
 					uv.x += disp * _power;
-					col *= 0.8;
 					col += tex2D(_MainTex, uv);
 				}
-				col /= 2.0;
+				col /= 3.0;
 				
 				
 				return col;

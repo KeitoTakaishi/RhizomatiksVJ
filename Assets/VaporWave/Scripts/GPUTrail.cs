@@ -39,18 +39,24 @@ public class GPUTrail : MonoBehaviour
     {
         CreateMesh();
         initInstancingParameter();
+        CreateBuffer();
         initBuffer();
         kernel = cs.FindKernel("update");
     }
 
     void Update()
     {
+        if(Input.GetKeyDown(KeyCode.Q))
+        {
+            initBuffer();
+            kernel = cs.FindKernel("update");
+        }
 
         cs.SetBuffer(kernel, "positionBuffer", positionBuffer);
         cs.SetBuffer(kernel, "velocityBuffer", velocityBuffer);
         cs.SetFloat("dt", Time.deltaTime);
         cs.SetFloat("time", Time.realtimeSinceStartup);
-        cs.Dispatch(kernel, BLOCK_SIZE, 1, 1);
+        cs.Dispatch(kernel, trailNum, 1, 1);
 
 
         //Graphics.DrawMeshInstancedIndirect(srcMesh, 0, instancingMat,
@@ -128,25 +134,19 @@ public class GPUTrail : MonoBehaviour
     }
 
     //--------------------------------------------------------------------------------------------------------
-    private void initBuffer()
+    private void CreateBuffer()
     {
-        List<Vector3> p = new List<Vector3>();
-        List<Vector3> v = new List<Vector3>();
-
         positionBuffer = new ComputeBuffer(trailNum * BLOCK_SIZE, sizeof(float) * 3);
         velocityBuffer = new ComputeBuffer(trailNum * BLOCK_SIZE, sizeof(float) * 3);
+    }
 
-
-        for(int i = 0; i < trailNum; i++)
-        {
-            for(int j = 0; j < trailLength; j++)
-            {
-                p.Add(Random.insideUnitSphere * 0.0f);
-                v.Add(Random.insideUnitSphere * 3.0f);
-            }
-        }
-        positionBuffer.SetData(p);
-        velocityBuffer.SetData(v);
+    //--------------------------------------------------------------------------------------------------------
+    private void initBuffer()
+    {
+        kernel = cs.FindKernel("init");
+        cs.SetBuffer(kernel, "positionBuffer", positionBuffer);
+        cs.SetBuffer(kernel, "velocityBuffer", velocityBuffer);
+        cs.Dispatch(kernel, trailNum, 1, 1);
     }
     //--------------------------------------------------------------------------------------------------------
     private void OnDisable()

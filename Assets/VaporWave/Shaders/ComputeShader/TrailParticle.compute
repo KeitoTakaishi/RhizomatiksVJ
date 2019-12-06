@@ -1,4 +1,5 @@
-﻿#pragma kernel update
+﻿#pragma kernel init
+#pragma kernel update
 #define BLOCK_SIZE 64
 #include "../Noise4d.cginc"
 
@@ -7,8 +8,18 @@ RWStructuredBuffer<float3> velocityBuffer;
 float dt;
 float time;
 
-[numthreads(BLOCK_SIZE, 1, 1)]
 
+[numthreads(BLOCK_SIZE, 1, 1)]
+void init(uint2 id : SV_DispatchThreadID)
+{
+	uint idx = id.x;
+	positionBuffer[idx] = float3(0.0, 0.0, 0.0);
+	velocityBuffer[idx] = float3(0.0, 0.0, 0.0);
+}
+
+
+
+[numthreads(BLOCK_SIZE, 1, 1)]
 void update(uint2 id : SV_DispatchThreadID)
 {
 	uint idx = id.x;
@@ -25,15 +36,15 @@ void update(uint2 id : SV_DispatchThreadID)
 			snoise(float4(freq.x * pos.x, freq.y * pos.y, freq.z * pos.z, 125.9 + (idx + 1) * 200.0 + time)));
 
 
-		float3 bPos = pos - float3(0.0, 0.0, 0.0);
+		float3 bPos = pos - float3(0.0, 7.0, 0.0);
 
 		vel += -(bPos)* length(bPos) * 0.15;
-		vel.xyz *= 0.1 + abs(sin(row * 3234.0)) * 0.3;
+		vel.xyz *= 0.6 + abs(sin(row * 3234.0)) * 0.01;
 
-		if (pos.y < -10.0) {
+		if (pos.y < -100.0) {
 			vel.y += 15.0;
 		}
-		else if (pos.y > 10.0) {
+		else if (pos.y > 100.0) {
 			vel.y -= 15.0;
 		}
 
