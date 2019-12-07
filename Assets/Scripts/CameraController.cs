@@ -22,6 +22,8 @@ public class CameraController : MonoBehaviour
     #endregion
 
     Easing easing;
+    [SerializeField] GameObject midiController;
+    MidiReciever midi;
    
     public enum EasingType
     {
@@ -48,6 +50,7 @@ public class CameraController : MonoBehaviour
         startPosition = this.transform.position;
         camera.transform.position = dir * v + startPosition;
         camera.transform.LookAt(target, Vector3.up);
+        midi = midiController.GetComponent<MidiReciever>();
     }
 
     void Update()
@@ -55,7 +58,7 @@ public class CameraController : MonoBehaviour
 
         if(isMoving == false)
         {
-            if(Input.GetKeyDown(KeyCode.A) || (target.position - this.transform.position).magnitude > 11f)
+            if(midi.notes[0] ||Input.GetKeyDown(KeyCode.A) || (target.position - this.transform.position).magnitude > 11f)
             {
                 isMoving = true;
                 t = v = 0;

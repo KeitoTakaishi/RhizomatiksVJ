@@ -16,7 +16,7 @@ public class GrayScott : MonoBehaviour
     [SerializeField] RenderTexture v;
     [SerializeField] ComputeShader cs;
     int kernel;
-    const int TexSize = 256;
+    const int TexSize = 512;
     int thread_size_x, thread_size_y;
 
 
@@ -60,8 +60,10 @@ public class GrayScott : MonoBehaviour
         kernel = cs.FindKernel("init");
         cs.SetTexture(kernel, "u", u);
         cs.SetTexture(kernel, "v", v);
+        cs.SetFloat("TexSize", u.width);
         cs.Dispatch(kernel, TexSize / thread_size_x, TexSize / thread_size_y, 1);
         kernel = cs.FindKernel("simulate");
+
     }
     //-----------------------------------------------------------
     void Simulate()
