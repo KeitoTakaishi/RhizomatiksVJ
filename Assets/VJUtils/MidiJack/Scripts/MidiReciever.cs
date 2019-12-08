@@ -69,7 +69,6 @@ public class MidiReciever : MonoBehaviour
                 notes[7] = false;
                 break;
         }
-        //Debug.Log("NoteOff: " + channel + "," + note);
     }
 
     void Knob(MidiChannel channel, int knobNumber, float knobValue)
@@ -96,9 +95,6 @@ public class MidiReciever : MonoBehaviour
             default:
                 break;
         }
-
-
-       //Debug.Log("Knob: " + knobNumber + "," + knobValue);
     }
 
     void OnEnable()
