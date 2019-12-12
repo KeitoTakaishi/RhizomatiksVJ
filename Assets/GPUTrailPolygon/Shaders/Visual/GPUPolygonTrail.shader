@@ -4,6 +4,7 @@ Shader "Custom/GPUPolygonTrail"
 {
 	Properties
 	{
+		[HDR]
 		_Color("Color", Color) = (1,1,1,1)
 		_MainTex("Albedo (RGB)", 2D) = "white" {}
 		_Glossiness("Smoothness", Range(0,1)) = 0.5
@@ -20,9 +21,9 @@ Shader "Custom/GPUPolygonTrail"
 			#pragma multi_compile_instancing
 			#pragma instancing_options procedural:setup
 			#pragma target 5.0
-			#include "utils.cginc"
-			#include "NoiseUtils.cginc"
-			#include "Noise4d.cginc"
+			#include "../utils.cginc"
+			#include "../NoiseUtils.cginc"
+			#include "../Noise4d.cginc"
 
 			sampler2D _MainTex;
 
@@ -68,41 +69,29 @@ Shader "Custom/GPUPolygonTrail"
 				float4 vert = v.vertex;
 				float2 uv = v.texcoord.xy;
 
+				int newVertexID = floor(fmod((float)(_vid / circleResolution), BLOCK_SIZE)) + (_instanceID)* BLOCK_SIZE;
 
-				//int newVertexID = (int)(fmod((float)(_vid / circleResolution), BLOCK_SIZE)) + (_instanceID)* BLOCK_SIZE;
-				int newVertexID = (int)(fmod((float)(_vid / circleResolution), BLOCK_SIZE)) + (_instanceID)* BLOCK_SIZE;
 
-				/*
-				if (fmod(_vid, BLOCK_SIZE) != 0.0) {
-					float3 dir = positionBuffer[newVertexID - 1] - positionBuffer[newVertexID];
-					float theta = atan2(dir.y, dir.z);
-					vert = mul(RotXMatrix(theta), vert);
-				}
-				else {
-					float theta = atan2(positionBuffer[newVertexID].y, positionBuffer[newVertexID].z);
-					vert = mul(RotXMatrix(theta), vert);
-				}
-				*/
+				float3 forward = float3(0.0, 0.0, -1.0);
+				float theta = dot(forward, positionBuffer[newVertexID]);
+				float axis = cross(float3(normalize(positionBuffer[newVertexID])), forward);
+				vert = mul(Rodrigues(axis, theta), vert);
+
 
 				float3 pos = positionBuffer[newVertexID];
 				vert = mul(TranslateMatrix(pos), vert);
 
-				
 				float r = pulseBuffer[newVertexID].y * pulseBuffer[newVertexID].x;
-				//float3 anim = normalize(v.vertex);
-				//float3 worldNormal = mul((float4x4)unity_ObjectToWorld, v.normal);
+				
 				float3 normal = normalize(v.vertex.xyz);
 				normal.z = 0.0;
-				float3 n = snoise3D(float4(_instanceID, fmod(_vid, circleResolution), 0.0, 0.0));
-				normal.xy *= n.xy;
-				float3 anim = normalize(normal) * r;
-				vert = mul(TranslateMatrix(anim * r), vert);
+				float random = rnd( float2(fmod(_vid, circleResolution), 0.0));
+				float3 anim = normalize(normal) * r * random;
+				vert = mul(TranslateMatrix(anim), vert);
 
 
 				//instanceID offSet
-				vert = mul(TranslateMatrix(float3( (_instanceID*2.0- trailNum), 0.0, 0.0)), vert);
-
-
+				vert = mul( TranslateMatrix(float3(_instanceID*2.0- trailNum, 0.0, 0.0)), vert);
 				v.vertex = vert;
 	#endif
 			}

@@ -60,8 +60,14 @@ public class GPUPolygonTrail : MonoBehaviour
     
     void Update()
     {
+        if(osc.oscData.Rythm == 1.0)
+        {
+            //target.transform.position = new Vector3(target.transform.position.x, target.transform.position.y, Random.Range(-3.0f, 3.0f));
+        }
+
+
        //if(Input.GetKeyDown(KeyCode.A)){
-       if(osc.oscData.Rythm == 1) { 
+       if(osc.oscData.Kick == 1) { 
             pulse = 1;
         }
 
@@ -108,6 +114,7 @@ public class GPUPolygonTrail : MonoBehaviour
             for(int j = 0; j < circleResolution; j++)
             {
 
+                if(i == 0) radius = 0.01f;
                 var p = new Vector3(radius * Mathf.Cos(theta * j),
                                     radius * Mathf.Sin(theta * j),
                                     i * delta);
