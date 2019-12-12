@@ -1,0 +1,49 @@
+﻿#pragma kernel init
+#pragma kernel update
+#define GROUP_THREAD_SIZE 256
+#define THREAD [numthreads(GROUP_THREAD_SIZE,1,1)]
+#include "../Noise4d.cginc"
+#include "../NoiseUtils.cginc"
+
+RWStructuredBuffer<float3> positionBuffer;
+RWStructuredBuffer<float3> velocityBuffer;
+RWStructuredBuffer<float2> pulseBuffer;
+
+float time;
+int pulse;
+
+THREAD
+void init (uint2 id : SV_DispatchThreadID)
+{
+	uint idx = id.x;
+	positionBuffer[idx] = float3(0.0, 0.0, 0.0);
+	velocityBuffer[idx] = float3(0.0, 0.0, 0.0);
+}
+
+
+float4 target;
+THREAD
+void update(uint2 id : SV_DispatchThreadID)
+{
+	uint idx = id.x;
+	
+	//update top
+	if (fmod(idx, GROUP_THREAD_SIZE) == 0) {
+
+		if (pulse == 1) {
+			pulseBuffer[idx].x = 1;
+			pulseBuffer[idx].y = rnd(float2(time, idx));
+		}
+		else {
+			
+			pulseBuffer[idx] = 0;
+		}
+		positionBuffer[idx] = target.xyz;
+		//velocityBuffer[idx] = float3(0.0, 0.0, 0.0);
+	}
+	else {
+		positionBuffer[idx] = positionBuffer[idx - 1];
+		pulseBuffer[idx] = pulseBuffer[idx - 1];
+	}
+	
+}

@@ -55,7 +55,7 @@ void init(uint2 id : SV_DispatchThreadID)
 
 	float i = floor(idx.x / 64.0);
 	positionBuffer[idx] =
-		curlNoise(float4(i, i, i, i)) * 0.2;
+		curlNoise(float4(i, i, i, i)) * 1.0;
 	
 	//positionBuffer[idx] = float3(0.0, 0.0, 0.0);
 	//velocityBuffer[idx] = float3(0.0, 0.0, 0.0);
@@ -94,7 +94,6 @@ void update(uint2 id : SV_DispatchThreadID)
 			float3 diff = pos - npos;
 			float dist = sqrt(dot(diff, diff));
 
-			//if (dist > 0.0 && dist <= _SeparateNeighborhoodRadius)
 			if (dist > 0.0 && dist <= _SeparateNeighborhoodRadius)
 			{
 				float3 repulse = normalize(pos - npos);
@@ -162,5 +161,7 @@ void update(uint2 id : SV_DispatchThreadID)
 	}
 	else {
 		positionBuffer[idx] = positionBuffer[idx - 1];
+		//velocityBuffer[idx] = velocityBuffer[idx - 1];
+
 	}
 }

@@ -67,15 +67,16 @@
 			newVertexID = (int)(fmod(floor(_vid / 2), BLOCK_SIZE)) + (_instanceID)* BLOCK_SIZE;
 
 			if (fmod(newVertexID, BLOCK_SIZE) > 1.0 ) {
-				float3 dir = velocityBuffer[newVertexID - 1] - velocityBuffer[newVertexID];
-				float theta = atan2(dir.x, dir.z);
+				//float3 dir = positionBuffer[newVertexID - 1] - positionBuffer[newVertexID];
+				//float theta = atan2(dir.z, dir.x);
+				float theta = atan2(velocityBuffer[newVertexID].x, velocityBuffer[newVertexID].z);
 				//vert = mul(RotYMatrix(theta), vert);
 			}
-			if (fmod(newVertexID, BLOCK_SIZE) > 1.0) {
+			if (fmod(newVertexID, BLOCK_SIZE) > 0.0) {
 				//float theta = atan2(positionBuffer[newVertexID].y, positionBuffer[newVertexID].x);
-				float3 dir = velocityBuffer[newVertexID - 1] - velocityBuffer[newVertexID];
+				float3 dir = positionBuffer[newVertexID - 1] - positionBuffer[newVertexID];
 				float theta = -asin(dir.y / (length(dir.xyz) + 1e-8));
-				vert = mul(RotXMatrix(theta), vert);
+				//vert = mul(RotXMatrix(theta), vert);
 			}
 
 			float3 pos = positionBuffer[newVertexID];

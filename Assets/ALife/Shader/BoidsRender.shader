@@ -90,9 +90,9 @@
 			v.normal = normalize(mul(object2world, v.normal));
 			#endif
 		}
-
 		void setup()
 		{
+			
 		}
 
 		// サーフェスシェーダ

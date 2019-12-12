@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: BoidsTrailRender
-  m_Shader: {fileID: 4800000, guid: 05061ec67efbc6a4781a7aaf47e45635, type: 3}
+  m_Name: GPUPolygonTrail
+  m_Shader: {fileID: 4800000, guid: a9d742d12d5b78b4384dea6ccfdc96cf, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 1
@@ -61,9 +61,9 @@ Material:
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
     - _GlossMapScale: 1
-    - _Glossiness: 0.238
+    - _Glossiness: 0.673
     - _GlossyReflections: 1
-    - _Metallic: 0.698
+    - _Metallic: 0.464
     - _Mode: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.02

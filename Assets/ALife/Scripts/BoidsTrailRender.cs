@@ -116,11 +116,12 @@ public class BoidsTrailRender : MonoBehaviour
         for(int i = 0; i < BLOCK_SIZE; i++)
         {
             float delta = trailLength / (float)BLOCK_SIZE;
-            var x = (i - BLOCK_SIZE / 2.0f) * delta;
+            //var x = (i - BLOCK_SIZE / 2.0f) * delta;
+            var z = i* delta;
             //Vector3 p1 = new Vector3(x, 0.0f, trailWidth / 2.0f);
             //Vector3 p2 = new Vector3(x, 0.0f, -1.0f * trailWidth / 2.0f);
-            Vector3 p1 = new Vector3(trailWidth / 2.0f, 0.0f, x);
-            Vector3 p2 = new Vector3(-1.0f * trailWidth / 2.0f, 0.0f, x);
+            Vector3 p1 = new Vector3(trailWidth / 2.0f, 0.0f, z);
+            Vector3 p2 = new Vector3(-1.0f * trailWidth / 2.0f, 0.0f, z);
 
 
             verticesList.Add(p1);
