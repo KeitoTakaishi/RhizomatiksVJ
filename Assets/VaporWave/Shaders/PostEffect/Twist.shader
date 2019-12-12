@@ -1,4 +1,4 @@
-﻿Shader "Unlit/Bacode"
+﻿Shader "Hidden/Twist"
 {
     Properties
     {
@@ -6,16 +6,14 @@
     }
     SubShader
     {
-        Tags { "RenderType"="Opaque" }
-        LOD 100
+        // No culling or depth
+        Cull Off ZWrite Off ZTest Always
 
         Pass
         {
             CGPROGRAM
             #pragma vertex vert
             #pragma fragment frag
-            // make fog work
-            #pragma multi_compile_fog
 
             #include "UnityCG.cginc"
 
@@ -28,30 +26,34 @@
             struct v2f
             {
                 float2 uv : TEXCOORD0;
-                UNITY_FOG_COORDS(1)
                 float4 vertex : SV_POSITION;
             };
-
-            sampler2D _MainTex;
-            float4 _MainTex_ST;
 
             v2f vert (appdata v)
             {
                 v2f o;
-				float4 vert = v.vertex;
-				vert.z = 0.5 * sin(_Time.y + vert.x * 100.0);
-                o.vertex = UnityObjectToClipPos(vert);
-                o.uv = TRANSFORM_TEX(v.uv, _MainTex);
-                UNITY_TRANSFER_FOG(o,o.vertex);
+                o.vertex = UnityObjectToClipPos(v.vertex);
+                o.uv = v.uv;
                 return o;
             }
 
+            sampler2D _MainTex;
+
             fixed4 frag (v2f i) : SV_Target
             {
-                
-                fixed4 col = tex2D(_MainTex, i.uv);
-				col.rgb = float3(dot(col.rgb, col.rgb).xxx);
-				UNITY_APPLY_FOG(i.fogCoord, col);
+				float2 uv = i.uv;
+				//float d = length(float2(0.5.xx) - uv);
+				//uv.y += 0.01 * sin(  (_Time.x * 10.0+(uv.x*2.0-1.0)*30.0) * (1.0 - d) );
+				
+				float threshold = 0.3 + 0.3 * sin(_Time.y);
+				float isTwist = 0.0;
+				if (uv.y > threshold && uv.y < threshold + 0.3) isTwist = 1.0;
+				float amp = 0.05;
+				float period = 15.0;
+				uv.x += amp * sin(_Time.x + uv.y * period) * isTwist;
+				
+				fixed4 col = tex2D(_MainTex, uv);
+				
                 return col;
             }
             ENDCG

@@ -2,9 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GPUTrail : MonoBehaviour
+public class BoidsTrailRender : MonoBehaviour
 {
-
     #region MeshData
     [SerializeField] int trailNum;
     [SerializeField] int trailLength;
@@ -32,8 +31,26 @@ public class GPUTrail : MonoBehaviour
     private int instancingCount;
     [SerializeField] Mesh srcMesh;
     [SerializeField] Material instancingMat;
-    #endregion 
+    #endregion
 
+
+    #region BoidsParameter
+    public float CohesionNeighborhoodRadius = 2.0f;
+    public float AlignmentNeighborhoodRadius = 2.0f;
+    public float SeparateNeighborhoodRadius = 1.0f;
+
+    public float MaxSpeed;
+    public float MaxSteerForce;
+
+    public float CohesionWeight;
+    public float AlignmentWeight;
+    public float SeparateWeight;
+
+    public float AvoidWallWeight;
+
+    public Vector3 WallCenter = Vector3.zero;
+    public Vector3 WallSize;
+    #endregion
 
     void Start()
     {
@@ -56,21 +73,39 @@ public class GPUTrail : MonoBehaviour
         cs.SetBuffer(kernel, "velocityBuffer", velocityBuffer);
         cs.SetFloat("dt", Time.deltaTime);
         cs.SetFloat("time", Time.realtimeSinceStartup);
+
+        //send boids parameter
+        
+        cs.SetFloat("_CohesionNeighborhoodRadius", CohesionNeighborhoodRadius);
+        cs.SetFloat("_AlignmentNeighborhoodRadius", AlignmentNeighborhoodRadius);
+        cs.SetFloat("_SeparateNeighborhoodRadius", SeparateNeighborhoodRadius);
+        cs.SetFloat("_MaxSpeed", MaxSpeed);
+        cs.SetFloat("_MaxSteerForce", MaxSteerForce);
+        cs.SetFloat("_SeparateWeight", SeparateWeight);
+        cs.SetFloat("_CohesionWeight", CohesionWeight);
+        cs.SetFloat("_AlignmentWeight", AlignmentWeight);
+        cs.SetVector("_WallCenter", WallCenter);
+        cs.SetVector("_WallSize", WallSize);
+        cs.SetFloat("_AvoidWallWeight", AvoidWallWeight);
+        cs.SetFloat("trailNum", trailNum);
+        
+
         cs.Dispatch(kernel, trailNum, 1, 1);
 
-
-        //Graphics.DrawMeshInstancedIndirect(srcMesh, 0, instancingMat,
-        //new Bounds(Vector3.zero, Vector3.one * 32.0f), argsBuffer, 0, null, UnityEngine.Rendering.ShadowCastingMode.ShadowsOnly, true, 0);
-
         instancingMat.SetBuffer("positionBuffer", positionBuffer);
+        instancingMat.SetBuffer("velocityBuffer", velocityBuffer);
         instancingMat.SetInt("BLOCK_SIZE", BLOCK_SIZE);
         Graphics.DrawMeshInstancedIndirect(srcMesh, 0, instancingMat,
         new Bounds(Vector3.zero, Vector3.one * 32.0f), argsBuffer);
     }
 
-
-        //--------------------------------------------------------------------------------------------------------
-        void CreateMesh()
+    void OnDrawGizmos()
+    {
+        Gizmos.color = Color.cyan;
+        Gizmos.DrawWireCube(WallCenter, WallSize);
+    }
+    //--------------------------------------------------------------------------------------------------------
+    void CreateMesh()
     {
         srcMesh = new Mesh();
         verticesList = new List<Vector3>();
@@ -82,8 +117,11 @@ public class GPUTrail : MonoBehaviour
         {
             float delta = trailLength / (float)BLOCK_SIZE;
             var x = (i - BLOCK_SIZE / 2.0f) * delta;
-            Vector3 p1 = new Vector3(x, 0.0f, trailWidth/2.0f);
-            Vector3 p2 = new Vector3(x, 0.0f,-1.0f * trailWidth/2.0f);
+            //Vector3 p1 = new Vector3(x, 0.0f, trailWidth / 2.0f);
+            //Vector3 p2 = new Vector3(x, 0.0f, -1.0f * trailWidth / 2.0f);
+            Vector3 p1 = new Vector3(trailWidth / 2.0f, 0.0f, x);
+            Vector3 p2 = new Vector3(-1.0f * trailWidth / 2.0f, 0.0f, x);
+
 
             verticesList.Add(p1);
             verticesList.Add(p2);
@@ -92,8 +130,8 @@ public class GPUTrail : MonoBehaviour
             normalList.Add(p2.normalized);
 
 
-            uvList.Add(new Vector2( (float)i / (float)(BLOCK_SIZE-1.0), 0.0f));
-            uvList.Add(new Vector2( (float)i / (float)(BLOCK_SIZE-1.0), 1.0f));
+            uvList.Add(new Vector2((float)i / (float)(BLOCK_SIZE - 1.0), 0.0f));
+            uvList.Add(new Vector2((float)i / (float)(BLOCK_SIZE - 1.0), 1.0f));
             if(i > 1 && i % 2 == 0)
             {
                 int i0 = i;
@@ -117,7 +155,7 @@ public class GPUTrail : MonoBehaviour
         //srcMesh.SetTriangles(indexList.ToArray(), 0);
         srcMesh.SetIndices(indexList.ToArray(), MeshTopology.Triangles, 0);
         srcMesh.RecalculateNormals();
-        
+
     }
     //--------------------------------------------------------------------------------------------------------
     private void initInstancingParameter()
@@ -136,6 +174,7 @@ public class GPUTrail : MonoBehaviour
     //--------------------------------------------------------------------------------------------------------
     private void CreateBuffer()
     {
+        //BLOCK_SIZE : 1本のTrailの解像度に相当
         positionBuffer = new ComputeBuffer(trailNum * BLOCK_SIZE, sizeof(float) * 3);
         velocityBuffer = new ComputeBuffer(trailNum * BLOCK_SIZE, sizeof(float) * 3);
     }

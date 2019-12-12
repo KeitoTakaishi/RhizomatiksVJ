@@ -16,15 +16,15 @@ public class GrayScott : MonoBehaviour
     [SerializeField] RenderTexture v;
     [SerializeField] ComputeShader cs;
     int kernel;
-    const int TexSize = 512;
+    const int TexSize = 1024;
     int thread_size_x, thread_size_y;
 
 
     void Start()
     {
         InitRenderTexture();
-        thread_size_x = 8;
-        thread_size_y = 8;
+        thread_size_x = 32;
+        thread_size_y = 32;
         Init();
         /*
         cs.SetFloat("Dv", Dv);

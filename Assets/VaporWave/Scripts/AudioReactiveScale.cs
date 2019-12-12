@@ -11,7 +11,9 @@ namespace VaporWave
 
         #region private data
         //float value;
-        [SerializeField] Vector3 scale;
+        [SerializeField] Vector3 scale; //変化する大きさ
+        [SerializeField] GameObject osc;
+        OSCManager oscManager;
         Easing easing;
         Vector3 initialScale;
         #endregion
@@ -27,6 +29,7 @@ namespace VaporWave
 
         void Start()
         {
+            oscManager = osc.GetComponent<OSCManager>();
             initialScale = this.transform.localScale;
             easing = this.GetComponent<Easing>();
         }
@@ -53,7 +56,7 @@ namespace VaporWave
                 curTime = 0;
                 v = 0;
                 this.transform.localScale = initialScale;
-                if(Input.GetKeyDown(KeyCode.W))
+                if(Input.GetKeyDown(KeyCode.W) || oscManager.oscData.Kick == 1.0)
                 {
                     isUp = true;
                     isDoing = true;
