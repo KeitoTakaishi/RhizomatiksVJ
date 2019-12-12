@@ -38,6 +38,10 @@ public class GrayScott : MonoBehaviour
 
     void Update()
     {
+        if(Input.GetKeyDown(KeyCode.I)){
+            //Init();
+            RandomSet();
+        }
         Simulate();
     }
 
@@ -71,6 +75,17 @@ public class GrayScott : MonoBehaviour
         cs.SetTexture(kernel, "u", u);
         cs.SetTexture(kernel, "v", v);
         cs.Dispatch(kernel, TexSize / thread_size_x, TexSize / thread_size_y, 1);
+    }
+
+    //-----------------------------------------------------------
+    void RandomSet()
+    {
+        kernel = cs.FindKernel("randomSet");
+        cs.SetFloat("time", Time.realtimeSinceStartup);
+        cs.SetTexture(kernel, "u", u);
+        cs.SetTexture(kernel, "v", v);
+        cs.Dispatch(kernel, TexSize / thread_size_x, TexSize / thread_size_y, 1);
+        kernel = cs.FindKernel("simulate");
     }
 
 }

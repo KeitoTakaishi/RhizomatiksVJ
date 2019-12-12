@@ -1,5 +1,6 @@
 ﻿#pragma kernel init
 #pragma kernel simulate
+#pragma kernel randomSet
 #include "../NoiseUtils.cginc"
 #define THREAD [numthreads(32, 32, 1)]
 RWTexture2D<float4> u;
@@ -11,6 +12,8 @@ float kill;
 float dt;
 float dx;
 float TexSize;
+float time;
+
 THREAD
 void init(uint2 id : SV_DispatchThreadID)
 {
@@ -25,13 +28,6 @@ void init(uint2 id : SV_DispatchThreadID)
 		u[float2(id)] = float4(1.0.xxx, 1.0);
 		v[float2(id)] = float4(0.0.xxx, 1.0);
 	}
-
-
-	/*
-	float n = rnd(id);
-	u[float2(id)] += float4(n, n, n,  0.0);
-	v[float2(id)] += float4(n, n, n,  1.0);
-	*/
 }
 
 
@@ -71,4 +67,18 @@ void simulate (uint2 id : SV_DispatchThreadID)
 			v[id] += dt * float4(dvdt, dvdt, dvdt, 0.0);
 		}
 	}
+}
+
+
+THREAD
+void randomSet(uint2 id : SV_DispatchThreadID)
+{
+	int center = 10;
+
+	if (rnd(float2(id.x * 10.0, time) ) > 0.75 ) {
+		u[float2(id)] = float4(0.5.xxx, 1.0);
+		v[float2(id)] = float4(0.25.xxx, 1.0);
+
+	}
+	
 }
