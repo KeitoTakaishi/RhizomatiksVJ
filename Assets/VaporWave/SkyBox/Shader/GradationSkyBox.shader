@@ -47,8 +47,9 @@
 
 			fixed4 frag(v2f i) : SV_Target
 			{
-
-				return fixed4(lerp(fixed3(1, 0, 0), fixed3(0, 0, 1), i.uv.y * 0.5 + 0.5), 1.0);
+				float2 uv = i.uv;
+				//uv.y = frac(uv.y + _Time.x);
+				return fixed4(lerp(fixed3(1, 0, 1), fixed3(0, 0, 1), uv.y * 0.5 + 0.5), 1.0);
 			}
             ENDCG
         }

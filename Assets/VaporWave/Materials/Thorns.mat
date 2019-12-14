@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Thorns
-  m_Shader: {fileID: 4800000, guid: 05061ec67efbc6a4781a7aaf47e45635, type: 3}
+  m_Shader: {fileID: 4800000, guid: be979e53ca2b7704dbcdb01ba614bbae, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
