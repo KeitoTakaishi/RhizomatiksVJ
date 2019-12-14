@@ -2,6 +2,7 @@
 {
     Properties
     {
+		[HDR]
         _Color ("Color", Color) = (1,1,1,1)
         _MainTex ("Albedo (RGB)", 2D) = "white" {}
         _Glossiness ("Smoothness", Range(0,1)) = 0.5
@@ -14,7 +15,7 @@
 		LOD 200
 
 		CGPROGRAM
-		#pragma surface surf Standard fullforwardshadows vertex:vert
+		#pragma surface surf Standard  vertex:vert
 		#pragma multi_compile_instancing
 		#pragma instancing_options procedural:setup
 		#pragma target 3.0
@@ -66,27 +67,20 @@
 			//bufferアクセス用のindex
 			newVertexID = (int)(fmod(floor(_vid / 2), BLOCK_SIZE)) + (_instanceID)* BLOCK_SIZE;
 
-			if (fmod(newVertexID, BLOCK_SIZE) > 1.0 ) {
-				//float3 dir = positionBuffer[newVertexID - 1] - positionBuffer[newVertexID];
-				//float theta = atan2(dir.z, dir.x);
-				float theta = atan2(velocityBuffer[newVertexID].x, velocityBuffer[newVertexID].z);
-				//vert = mul(RotYMatrix(theta), vert);
-			}
-			if (fmod(newVertexID, BLOCK_SIZE) > 0.0) {
-				//float theta = atan2(positionBuffer[newVertexID].y, positionBuffer[newVertexID].x);
-				float3 dir = positionBuffer[newVertexID - 1] - positionBuffer[newVertexID];
-				float theta = -asin(dir.y / (length(dir.xyz) + 1e-8));
-				//vert = mul(RotXMatrix(theta), vert);
-			}
+			vert = mul(ScaleMatrix(float3(2.0, 2.0, 2.0)), vert);
+
+			float3 forward = float3(0.0, 0.0, -1.0);
+			float theta = dot(forward, positionBuffer[newVertexID]);
+			float axis = cross(float3(normalize(positionBuffer[newVertexID])), forward);
+			vert = mul(Rodrigues(axis, theta), vert);
 
 			float3 pos = positionBuffer[newVertexID];
 
-			//float4x4 object2world = (float4x4)0.0;
-			//object2world._11_22_33_44 = float4(1.0.xxxx);
-			//object2world._14_24_34 += offSet.xyz;
-			//vert = mul(object2world, vert);
+			
 
 			vert = mul(TranslateMatrix(pos), vert);
+			vert = mul(TranslateMatrix(float3(0.0, 15.0, 0.0)), vert);
+
 			v.vertex = vert;
 #endif
 		}
@@ -102,7 +96,7 @@
         {
 			float2 uv = IN.uv_MainTex;
 			uv.y *= 0.7;
-			uv.x *= 4.0;
+			uv.x *= 2.0;
 			uv.x = frac(uv.x);
             fixed4 c = tex2D (_MainTex, uv) * _Color;
             o.Albedo = c.rgb;

@@ -1,4 +1,4 @@
-﻿Shader "Hidden/Twist"
+﻿Shader "Hidden/NoiseSkyBox"
 {
     Properties
     {
@@ -7,8 +7,12 @@
     SubShader
     {
         // No culling or depth
-        Cull Off ZWrite Off ZTest Always
-
+        //Cull Off ZWrite Off ZTest Always
+		Tags{
+			"RenderType" = "Background"
+			"Queue" = "Background"
+			"PreviewType" = "SkyBox"
+		}
         Pass
         {
             CGPROGRAM
@@ -16,7 +20,7 @@
             #pragma fragment frag
 
             #include "UnityCG.cginc"
-
+			#include "Noise4d.cginc"
             struct appdata
             {
                 float4 vertex : POSITION;
@@ -42,18 +46,12 @@
             fixed4 frag (v2f i) : SV_Target
             {
 				float2 uv = i.uv;
-				//float d = length(float2(0.5.xx) - uv);
-				//uv.y += 0.01 * sin(  (_Time.x * 10.0+(uv.x*2.0-1.0)*30.0) * (1.0 - d) );
-				
-				float threshold = 0.3 + 0.3 * sin(_Time.y);
-				float isTwist = 0.0;
-				if (uv.y > threshold && uv.y < threshold + 0.3) isTwist = 1.0;
-				float amp = 0.05;
-				float period = 15.0;
-				uv.x += amp * sin(_Time.x + uv.y * period) * isTwist;
-				
-				fixed4 col = tex2D(_MainTex, uv);
-				
+                fixed4 col = tex2D(_MainTex, uv);
+				float period = 2.0;
+				uv *= period;
+				float4 color = float4(1.0, 0.0, 0.8, 1.0);
+				col.rgb = snoise3D(float4(0.0, uv.x, uv.y, _Time.y * 1.0));
+				col = col * color;
                 return col;
             }
             ENDCG

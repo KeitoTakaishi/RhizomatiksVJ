@@ -357,23 +357,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0dec8310c533c5645bf6fd312b6f5230, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  trailNum: 256
+  trailNum: 1024
   trailLength: 1
-  trailWidth: 0.01
+  trailWidth: 0.2
   cs: {fileID: 7200000, guid: 8951a06174a136a4dadea19d3764659d, type: 3}
   srcMesh: {fileID: 0}
   instancingMat: {fileID: 2100000, guid: 73ca5e254beb5ed46a1e93239077c7ac, type: 2}
   CohesionNeighborhoodRadius: 2
   AlignmentNeighborhoodRadius: 3
   SeparateNeighborhoodRadius: 2
-  MaxSpeed: 1
-  MaxSteerForce: 2
+  MaxSpeed: 4.54
+  MaxSteerForce: 3.2
   CohesionWeight: 1
   AlignmentWeight: 1
   SeparateWeight: 3
   AvoidWallWeight: 40
   WallCenter: {x: 0, y: 0, z: 0}
-  WallSize: {x: 2, y: 2, z: 2}
+  WallSize: {x: 10, y: 10, z: 10}
 --- !u!4 &1048756862
 Transform:
   m_ObjectHideFlags: 0
@@ -553,7 +553,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1342842800
 Transform:
   m_ObjectHideFlags: 0
@@ -658,7 +658,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 100002, guid: b8d9b3fe245b0e64b9e1e6e4739c7088, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: b8d9b3fe245b0e64b9e1e6e4739c7088, type: 3}
       propertyPath: m_LocalPosition.x
@@ -890,7 +890,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1880177255}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0ecc8feb7cff29b4aabf47af6b0917ca, type: 3}
   m_Name: 
@@ -979,7 +979,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!199 &1904524982
 ParticleSystemRenderer:
   serializedVersion: 6

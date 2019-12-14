@@ -1,4 +1,5 @@
-﻿Shader "Custom/AudioReactiveVertex"
+﻿
+Shader "Custom/AudioReactiveVertex"
 {
     Properties
     {
@@ -74,8 +75,8 @@
         {
 			float2 uv = IN.uv_MainTex;
             fixed4 c = tex2D (_MainTex, uv) * _Color;
-			float3 col = IN.normal;
-			c.rgb = col;
+			//float3 col = IN.normal;
+			//c.rgb = col;
 			o.Albedo = c.rgb;
             o.Metallic = _Metallic;
             o.Smoothness = _Glossiness;

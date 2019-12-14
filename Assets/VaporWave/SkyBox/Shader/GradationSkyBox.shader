@@ -3,13 +3,9 @@
     SubShader
     {
         // No culling or depth
-        //Cull Off ZWrite Off ZTest Always
+		//Cull Off ZWrite Off ZTest Always
 
-		Tags{
-			"RenderType" = "Background"
-			"Queue" = "Background"
-			"PreviewType" = "SkyBox"
-		}
+		  Tags { "RenderType" = "Background" "Queue" = "Background" }
         
 		
 		Pass
@@ -17,7 +13,7 @@
 
 			ZWrite Off
 			Cull Off
-
+			Fog { Mode Off }
             CGPROGRAM
             #pragma vertex vert
             #pragma fragment frag
@@ -49,7 +45,7 @@
 			{
 				float2 uv = i.uv;
 				//uv.y = frac(uv.y + _Time.x);
-				return fixed4(lerp(fixed3(1, 0, 1), fixed3(0, 0, 1), uv.y * 0.5 + 0.5), 1.0);
+				return fixed4(lerp(fixed3(0, 0.9, 0.9), fixed3(1, 0.9, 0.7), uv.y * 0.5 + 0.5), 1.0);
 			}
             ENDCG
         }

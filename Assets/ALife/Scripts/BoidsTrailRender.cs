@@ -17,7 +17,7 @@ public class BoidsTrailRender : MonoBehaviour
 
     #region ComputeShader
     [SerializeField] ComputeShader cs;
-    const int BLOCK_SIZE = 64;
+    const int BLOCK_SIZE = 32;
     ComputeBuffer positionBuffer;
     ComputeBuffer velocityBuffer;
     int kernel;

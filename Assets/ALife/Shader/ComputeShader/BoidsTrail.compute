@@ -1,6 +1,6 @@
 ﻿#pragma kernel init
 #pragma kernel update
-#define BLOCK_SIZE 64
+#define BLOCK_SIZE 32
 #include "../Noise4d.cginc"
 
 RWStructuredBuffer<float3> positionBuffer;
@@ -53,7 +53,7 @@ void init(uint2 id : SV_DispatchThreadID)
 {
 	uint idx = id.x;
 
-	float i = floor(idx.x / 64.0);
+	float i = floor(idx.x / BLOCK_SIZE);
 	positionBuffer[idx] =
 		curlNoise(float4(i, i, i, i)) * 1.0;
 	
