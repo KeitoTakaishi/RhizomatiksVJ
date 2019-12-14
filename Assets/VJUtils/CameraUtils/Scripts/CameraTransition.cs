@@ -5,9 +5,12 @@ using UnityEngine;
 public class CameraTransition : MonoBehaviour
 {
     Camera cam;
-
+    [SerializeField] Material transitionMaterial;
+    [SerializeField] Material defaultMaterial;
+    Material curMat;
     void Awake()
     {
+        curMat = transitionMaterial;
         cam = GameObject.FindWithTag("MainCamera").GetComponent<Camera>();
         StartCoroutine("ChangeFov");
     }
@@ -23,11 +26,18 @@ public class CameraTransition : MonoBehaviour
 
     IEnumerator ChangeFov()
     {
-        for(int i = 0; i <= 60; i++)
+        for(int i = 10; i >= 0; i--)
         {
-            cam.fieldOfView = i;
+            //cam.fielOfView = i;
+            transitionMaterial.SetFloat("power", (float)i * 1.0f / 60.0f);
+            if(i == 0) curMat = defaultMaterial;
             yield return null;
 
         }
+    }
+
+    void OnRenderImage(RenderTexture src, RenderTexture dest)
+    {
+        Graphics.Blit(src, dest, curMat);
     }
 }
