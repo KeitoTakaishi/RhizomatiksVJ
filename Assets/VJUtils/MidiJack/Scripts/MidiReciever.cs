@@ -3,9 +3,7 @@ using MidiJack;
 
 public class MidiReciever : MonoBehaviour
 {
-    public bool[] notes;
-
-
+    static public bool[] notes;
 
 
     void NoteOn(MidiChannel channel, int note, float velocity)

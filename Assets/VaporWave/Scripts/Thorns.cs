@@ -12,7 +12,6 @@ public class Thorns : MonoBehaviour
 
     #region easing parameters
     [SerializeField] int duration;
-    Easing easing;
     int curTime = 0;
     float value = 0;
     bool isDoing = false;
@@ -29,7 +28,6 @@ public class Thorns : MonoBehaviour
     void Start()
     {
         surface = model.GetComponent<MeshRenderer>().material;
-        easing = this.GetComponent<Easing>();
         
     }
 
@@ -38,7 +36,7 @@ public class Thorns : MonoBehaviour
        
         if(isDoing)
         {
-            value = easing.easeOutCubic( (float)curTime / (float)duration);
+            value = Easing.easeOutCubic( (float)curTime / (float)duration);
             surface.SetFloat("coef", value);
             if(isUp)
             {

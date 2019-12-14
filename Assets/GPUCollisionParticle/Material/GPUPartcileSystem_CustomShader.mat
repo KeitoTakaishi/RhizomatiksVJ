@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Glitch
-  m_Shader: {fileID: 4800000, guid: 78e3e1474ba9359458a4026d32b4e893, type: 3}
+  m_Name: GPUPartcileSystem_CustomShader
+  m_Shader: {fileID: 4800000, guid: 221ee39ff32a1bc4181c7ec2b7b48902, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -56,8 +56,6 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
-    - _BlockSizeX: 14.5
-    - _BlockSizeY: -6.8
     - _BumpScale: 1
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
@@ -72,7 +70,6 @@ Material:
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
-    - _Threshold: 0.95
     - _UVSec: 0
     - _ZWrite: 1
     m_Colors:

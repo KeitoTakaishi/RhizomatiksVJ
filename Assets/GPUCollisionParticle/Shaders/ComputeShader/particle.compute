@@ -1,0 +1,72 @@
+﻿#pragma kernel Init
+#pragma kernel Emit
+#pragma kernel Update
+#define THREAD [numthreads(8,1,1)]
+#include "../NoiseUtils.cginc"
+struct Particle
+{
+	int id;
+	bool active;
+	float3 position;
+	float3 velocity;
+	float3 rotation;
+	float3 angVelocity;
+	float scale;
+	float time;
+	float lifeTime;
+};
+
+RWStructuredBuffer<Particle> _Particles;
+
+float _DeltaTime;
+float4 _Range;
+float4 _Velocity;
+float4 _AngVelocity;
+
+
+THREAD
+void Init(uint id : SV_DispatchThreadID)
+{
+	float2 seed = float2(id + 1, id + 2);
+	float3 pos = rand3(seed);
+	float3 rot = rand3(seed + 3);
+
+	Particle p = _Particles[id];
+	p.id = id;
+	p.active = true;
+	p.position = pos * _Range.xyz;
+	p.velocity = pos * _Velocity.xyz;
+	p.rotation = rot * _AngVelocity.xyz;
+	p.angVelocity = rot * _AngVelocity.xyz;
+	p.scale = 0.1;
+	p.time = 0.0;
+	//p.lifeTime = 2.0 + rand(seed * 7) * 2.0;
+	p.lifeTime = 2.0;
+	_Particles[id.x] = p;
+}
+
+THREAD
+void Emit(uint id : SV_DispatchThreadID)
+{
+	if (!_Particles[id].active) Init(id);
+}
+
+THREAD
+void Update(uint id : SV_DispatchThreadID)
+{
+	Particle p = _Particles[id];
+
+	if (p.time < p.lifeTime) {
+		p.active = true;
+		p.time += _DeltaTime;
+		p.position += p.velocity * _DeltaTime;
+		p.velocity.y += -9.8 * _DeltaTime;
+		p.rotation += p.angVelocity * _DeltaTime;
+		p.scale = (1.0 - pow(p.time / p.lifeTime, 3.0)) * 0.1;
+	}
+	else {
+		p.active = false;
+	}
+
+	_Particles[id] = p;
+}

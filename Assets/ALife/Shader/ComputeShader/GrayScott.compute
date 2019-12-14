@@ -75,10 +75,14 @@ void randomSet(uint2 id : SV_DispatchThreadID)
 {
 	int center = 10;
 
-	if (rnd(float2(id.x * 10.0, time) ) > 0.75 ) {
+	if (rnd2(float2(id.x + time, id.y * time) ) > 0.5 ) {
 		u[float2(id)] = float4(0.5.xxx, 1.0);
 		v[float2(id)] = float4(0.25.xxx, 1.0);
 
+	}
+	else {
+		u[float2(id)] = float4(0.5.xxx, 0.0);
+		v[float2(id)] = float4(0.25.xxx, 0.0);
 	}
 	
 }

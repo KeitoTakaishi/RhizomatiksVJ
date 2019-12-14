@@ -5,17 +5,14 @@ using uOSC;
 
 
 [System.Serializable]
-public struct OscData
+static public class OscData
 {
-    [SerializeField]
-    float low;
-    [SerializeField]
-    float kick;
-    [SerializeField]
-    float rythm;
-    [SerializeField]
-    float snare;
+    public static float low;
+    public static float kick;
+    public static float rythm;
+    public static float snare;
 
+    /*
     public OscData(float l, float k, float r, float s)
     {
         low = l;
@@ -23,40 +20,39 @@ public struct OscData
         rythm = r;
         snare = s;
     }
-
+    */
+    /*
     public float Low
     {
-        set { this.low = value; }
+        set { low = value; }
         get { return this.low; }
     }
 
     public float Kick
     {
-        set { this.kick = value; }
+        set { kick = value; }
         get { return this.kick; }
     }
 
 
     public float Rythm
     {
-        set { this.rythm = value; }
-        get { return this.rythm; }
+        set { rythm = value; }
+        get { return rythm; }
     }
 
     public float Snare
     {
-        set { this.snare = value; }
-        get { return this.snare; }
+        set { snare = value; }
+        get { return snare; }
     }
+    */
 };
 public class OSCManager : MonoBehaviour
 {
 
-    [SerializeField]
-    public OscData oscData; 
     void Start()
     {
-        oscData = new OscData(0, 0, 0, 0);
         var server = GetComponent<uOscServer>();
         server.onDataReceived.AddListener(OnDataReceived);
     }
@@ -75,22 +71,22 @@ public class OSCManager : MonoBehaviour
         {
             case "/Low":
                 //Debug.Log(message.values[0]);
-                oscData.Low = float.Parse (message.values[0].ToString());
+                OscData.low = float.Parse (message.values[0].ToString());
                 break;
 
             case "/Kickdetection":
                 //Debug.Log(message.values[0]);
-                oscData.Kick = float.Parse(message.values[0].ToString());
+                OscData.kick = float.Parse(message.values[0].ToString());
                 break;
 
             case "/Rythm":
                 //Debug.Log(message.values[0]);
-                oscData.Rythm = float.Parse(message.values[0].ToString());
+                OscData.rythm = float.Parse(message.values[0].ToString());
                 break;
 
             case "/Snaredetection":
                 //Debug.Log(message.values[0]);
-                oscData.Snare= float.Parse(message.values[0].ToString());
+                OscData.snare= float.Parse(message.values[0].ToString());
                 break;
         } 
     }

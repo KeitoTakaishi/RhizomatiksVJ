@@ -4,5 +4,17 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/VaporWave.unity
+    guid: 1265f5dfbc4b6f34db37b749e41dd563
+  - enabled: 1
+    path: Assets/Scenes/ALife.unity
+    guid: cb76cefbe3d317f40a8b69feaf5631c2
+  - enabled: 1
+    path: Assets/Scenes/GPUPolygonTrail.unity
+    guid: e7e59b4758a36fc4d99740082dfd2095
+  - enabled: 1
+    path: Assets/Scenes/GPUCollisionParticle.unity
+    guid: afef02f58325d644d99544ca258d99ea
   m_configObjects: {}

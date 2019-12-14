@@ -21,9 +21,6 @@ public class CameraController : MonoBehaviour
     [SerializeField] bool isUp = false;
     #endregion
 
-    Easing easing;
-    [SerializeField] GameObject midiController;
-    MidiReciever midi;
    
     public enum EasingType
     {
@@ -42,7 +39,6 @@ public class CameraController : MonoBehaviour
     void Awake()
     {
         camera = this.GetComponent<Camera>();
-        easing = this.GetComponent<Easing>();
     }
 
     void Start()
@@ -50,7 +46,6 @@ public class CameraController : MonoBehaviour
         startPosition = this.transform.position;
         camera.transform.position = dir * v + startPosition;
         camera.transform.LookAt(target, Vector3.up);
-        midi = midiController.GetComponent<MidiReciever>();
     }
 
     void Update()
@@ -58,7 +53,8 @@ public class CameraController : MonoBehaviour
 
         if(isMoving == false)
         {
-            if(midi.notes[0] ||Input.GetKeyDown(KeyCode.A) || (target.position - this.transform.position).magnitude > 11f)
+            //if(MidiReciever.notes[0] ||Input.GetKeyDown(KeyCode.A) || (target.position - this.transform.position).magnitude > 0.0f)
+            if(MidiReciever.notes[0] ||Input.GetKeyDown(KeyCode.A))
             {
                 isMoving = true;
                 t = v = 0;
@@ -94,31 +90,31 @@ public class CameraController : MonoBehaviour
 
             if(type == EasingType.easeInQuad)
             {
-                v = easing.easeInQuad(t);
+                v = Easing.easeInQuad(t);
             }else if(type == EasingType.easeOutQuad)
             {
-                v = easing.easeOutQuad(t);
+                v = Easing.easeOutQuad(t);
             }else if(type == EasingType.easeInOutQuad)
             {
-                v = easing.easeInOutQuad(t);
+                v = Easing.easeInOutQuad(t);
             }else if(type == EasingType.easeInCubic)
             {
-                v = easing.easeInCubic(t);
+                v = Easing.easeInCubic(t);
             } else if(type == EasingType.easeOutCubic)
             {
-                v = easing.easeOutCubic(t);
+                v = Easing.easeOutCubic(t);
             } else if(type == EasingType.easeInOutCubic)
             {
-                v = easing.easeInOutCubic(t);
+                v = Easing.easeInOutCubic(t);
             } else if(type == EasingType.easeInExpo)
             {
-                v = easing.easeInExpo(t);
+                v = Easing.easeInExpo(t);
             } else if(type == EasingType.easeOutExpo)
             {
-                v = easing.easeOutExpo(t);
+                v = Easing.easeOutExpo(t);
             } else if(type == EasingType.easeInOutExpo)
             {
-                v = easing.easeInOutExpo(t);
+                v = Easing.easeInOutExpo(t);
             }
 
 

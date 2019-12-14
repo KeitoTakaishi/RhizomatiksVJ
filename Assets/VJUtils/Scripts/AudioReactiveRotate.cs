@@ -2,34 +2,40 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Distortion : MonoBehaviour
+public class AudioReactiveRotate : MonoBehaviour
 {
-    [SerializeField] Material mat;
+    #region private data
+    [Tooltip("grown-offset")]
+    [SerializeField] Vector3 rotate; //変化する大きさ
+    Vector3 initialRotate;
+    #endregion
 
-    #region easing parameters
+    #region Easing Parameter
     [SerializeField] int duration;
-    Easing easing;
     int curTime = 0;
-    float value = 0;
+    float v;
     bool isDoing = false;
     bool isUp = true;
-    float amp = 0.0f;
     #endregion
+
+
     void Start()
     {
-        easing = this.GetComponent<Easing>();
-
-        mat.SetFloat("_width", Screen.width);
-        mat.SetFloat("_height", Screen.height);
+        initialRotate = this.transform.eulerAngles;
     }
 
     void Update()
     {
+        Reaction();
+    }
+
+    void Reaction()
+    {
         if(isDoing)
         {
-            value = Easing.easeInOutQuad((float)curTime / (float)duration) * amp;
-            mat.SetFloat("_power", value);
-            
+            v = Easing.easeInOutQuad((float)curTime / (float)duration);
+            this.transform.localEulerAngles = initialRotate + v * rotate;
+
             if(isUp)
             {
                 curTime++;
@@ -39,17 +45,16 @@ public class Distortion : MonoBehaviour
                 curTime = curTime - 2;
                 if(curTime < 0) isDoing = false;
             }
-            
+
         } else
         {
             curTime = 0;
-            value = 0;
-            mat.SetFloat("_power", value);
-            if(Input.GetKeyDown(KeyCode.T))
+            v = 0;
+            this.transform.localEulerAngles = initialRotate;
+            if(Input.GetKeyDown(KeyCode.W) || OscData.kick == 1.0)
             {
                 isUp = true;
                 isDoing = true;
-                amp = 1.0f;
             }
         }
     }

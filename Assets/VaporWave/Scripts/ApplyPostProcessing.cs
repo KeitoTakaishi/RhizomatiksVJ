@@ -5,36 +5,34 @@ using UnityEngine;
 public class VaporWavePostPro : MonoBehaviour
 {
     [SerializeField] Material[] material;
-    [SerializeField] GameObject midiController;
-    MidiReciever midi;
     Material mat;
 
 
     void Start()
     {
-        midi = midiController.GetComponent<MidiReciever>();
         mat = material[0];
     }
 
     void Update()
     {
-        if(midi.notes[1])
+        
+        if(MidiReciever.notes[1])
         {
             mat = material[0];
-        }else if(midi.notes[2])
+        }else if(MidiReciever.notes[2])
         {
             //Glitch
             mat = material[1];
-        }else if(midi.notes[3])
+        }else if(MidiReciever.notes[3])
         {
             //Distortion
             mat = material[2];
-        } else if(midi.notes[4])
+        } else if(MidiReciever.notes[4])
         {
             //Distortion
             mat = material[3];
         }
-
+        
 
     }
 

@@ -62,6 +62,15 @@ public class GrayScott : MonoBehaviour
     void Init()
     {
         kernel = cs.FindKernel("init");
+
+
+        Du = 2e-5f;
+        Dv = 1e-5f;
+        dt = 1.0f;
+        dx = 0.01f;
+        SendParames(Du, Dv, dt, dx);
+        
+
         cs.SetTexture(kernel, "u", u);
         cs.SetTexture(kernel, "v", v);
         cs.SetFloat("TexSize", u.width);
@@ -84,8 +93,48 @@ public class GrayScott : MonoBehaviour
         cs.SetFloat("time", Time.realtimeSinceStartup);
         cs.SetTexture(kernel, "u", u);
         cs.SetTexture(kernel, "v", v);
+        SendParames(Du, Dv, dt, dx);
         cs.Dispatch(kernel, TexSize / thread_size_x, TexSize / thread_size_y, 1);
         kernel = cs.FindKernel("simulate");
+    }
+
+    //-----------------------------------------------------------
+    void SendParames(float _Du, float _Dv, float _dt, float _dx)
+    {
+        float _feed = 0.0f;
+        float _kill = 0.0f;
+
+        float index = Random.Range(0.0f, 1.0f);
+        if(index < 0.2f)
+        {
+            feed = 0.04f;
+            kill = 0.06f;
+        } else if(0.2f <= index && index < 0.4f)
+        {
+            feed = 0.035f;
+            kill = 0.065f;
+        } else if(0.4f <= index && index < 0.6f)
+        {
+            feed = 0.012f;
+            kill = 0.05f;
+        } else if(0.6f <= index && index < 0.8f)
+        {
+            feed = 0.025f;
+            kill = 0.05f;
+        } else if(0.8f <= index)
+        {
+            feed = 0.022f;
+            kill = 0.051f;
+        }
+
+
+
+        cs.SetFloat("Du", _Du);
+        cs.SetFloat("Dv", _Du);
+        cs.SetFloat("feed", _feed);
+        cs.SetFloat("kill", _kill);
+        cs.SetFloat("dt", _dt);
+        cs.SetFloat("dx", _dx);
     }
 
 }

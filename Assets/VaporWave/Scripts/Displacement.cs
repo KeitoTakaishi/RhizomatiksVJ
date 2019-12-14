@@ -9,7 +9,6 @@ public class Displacement : MonoBehaviour
     #region easing parameters
     [SerializeField] int duration;
     [SerializeField] float amp;
-    Easing easing;
     int curTime = 0;
     float value = 0;
     bool isDoing = false;
@@ -17,8 +16,6 @@ public class Displacement : MonoBehaviour
     #endregion
     void Start()
     {
-        easing = this.GetComponent<Easing>();
-
         mat.SetFloat("_width", Screen.width);
         mat.SetFloat("_height", Screen.height);
     }
@@ -27,7 +24,7 @@ public class Displacement : MonoBehaviour
     {
         if(isDoing)
         {
-            value = easing.easeInOutQuad((float)curTime / (float)duration) * amp;
+            value = Easing.easeInOutQuad((float)curTime / (float)duration) * amp;
             mat.SetFloat("_power", value * amp);
 
             if(isUp)

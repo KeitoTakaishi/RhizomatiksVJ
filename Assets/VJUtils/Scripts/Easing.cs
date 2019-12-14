@@ -4,32 +4,17 @@ using UnityEngine;
 
 public class Easing : MonoBehaviour
 {
-
-    
-
-
-    void Start()
-    {
-        
-    }
-
-    void Update()
-    {
-        
-    }
-
-
-    public float easeInQuad(float t)  
+    static public float easeInQuad(float t)  
     {
         return t * t;
     }
 
-    public float easeOutQuad(float t)
+    static public float easeOutQuad(float t)
     {
         return -1.0f * t * (t - 2.0f);
     }
 
-    public float easeInOutQuad(float t)
+    static public float easeInOutQuad(float t)
     {
         if((t *= 2.0f) < 1.0)
         {
@@ -40,17 +25,17 @@ public class Easing : MonoBehaviour
         }
     }
 
-    public float easeInCubic(float t)
+    static public float easeInCubic(float t)
     {
         return t * t * t;
     }
 
-    public float easeOutCubic(float t)
+    static public float easeOutCubic(float t)
     {
         return (t = t - 1.0f) * t * t + 1.0f;
     }
 
-    public float easeInOutCubic(float t)
+    static public float easeInOutCubic(float t)
     {
         if((t *= 2.0f) < 1.0f)
         {
@@ -61,17 +46,17 @@ public class Easing : MonoBehaviour
         }
     }
 
-    public float easeInExpo(float t)
+    static public float easeInExpo(float t)
     {
         return (t == 0.0f) ? 0.0f : Mathf.Pow(2.0f, 10.0f * (t - 1.0f));
     }
 
-    public float easeOutExpo(float t)
+    static public float easeOutExpo(float t)
     {
         return (t == 1.0f) ? 1.0f : -Mathf.Pow(2.0f, -10.0f * t) + 1.0f;
     }
 
-    public float easeInOutExpo(float t)
+    static public float easeInOutExpo(float t)
     {
         if(t == 0.0 || t == 1.0)
         {
