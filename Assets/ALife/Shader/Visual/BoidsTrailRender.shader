@@ -19,7 +19,7 @@
 		#pragma multi_compile_instancing
 		#pragma instancing_options procedural:setup
 		#pragma target 3.0
-		#include "utils.cginc"
+		#include "../utils.cginc"
 
 		sampler2D _MainTex;
 

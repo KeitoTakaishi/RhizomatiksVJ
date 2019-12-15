@@ -127,8 +127,6 @@ public class GrayScott : MonoBehaviour
             kill = 0.051f;
         }
 
-
-
         cs.SetFloat("Du", _Du);
         cs.SetFloat("Dv", _Du);
         cs.SetFloat("feed", _feed);
