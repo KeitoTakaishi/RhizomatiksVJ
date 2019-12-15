@@ -23,7 +23,7 @@
 				#pragma fragment frag
 
 				#include "UnityCG.cginc"	
-				#include "../NoiseUtils.cginc"
+				#include "..//NoiseUtils.cginc"
 
 
 				struct appdata
@@ -72,7 +72,7 @@
 					
 					
 					float3 mono = float3(0.0, 0.0, 0.0);
-					//float disp = tex2D(_Tex1, float2(uv.x, frac(uv.y * 15.0)));
+					//
 					if (gray == 1.0) {
 						/*
 						float blockSize = 100.0;

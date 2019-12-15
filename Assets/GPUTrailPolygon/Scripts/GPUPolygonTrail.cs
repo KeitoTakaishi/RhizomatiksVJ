@@ -36,13 +36,10 @@ public class GPUPolygonTrail : MonoBehaviour
 
 
     [SerializeField] GameObject target;
-    [SerializeField] GameObject oscManager;
     int pulse = 0;
-    OSCManager osc;
 
     private void Awake()
     {
-        osc =oscManager.GetComponent<OSCManager>();
 
     }
 
