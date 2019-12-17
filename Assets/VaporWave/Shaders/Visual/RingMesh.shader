@@ -44,8 +44,9 @@
             {
 
 				float2 uv = i.uv;
-				uv = frac(uv.x + _Time.x);
-                fixed4 col = tex2D(_MainTex, uv);
+				uv.x = frac(uv.x + _Time.x);
+				uv.y = uv.y * 1.0;
+				fixed4 col = tex2D(_MainTex, uv);
                 return col;
             }
             ENDCG

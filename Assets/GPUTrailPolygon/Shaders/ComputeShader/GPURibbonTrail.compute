@@ -1,0 +1,35 @@
+﻿#pragma kernel update
+#define BLOCK_SIZE 128
+#define THREAD [numthreads(BLOCK_SIZE,1,1)]
+#include "../Noise4d.cginc"
+
+RWStructuredBuffer<float3> positionBuffer;
+RWStructuredBuffer<float3> velocityBuffer;
+RWStructuredBuffer<float3> normalBuffer;
+RWStructuredBuffer<float3> topPosBuffer;
+float time;
+
+
+THREAD
+void update (uint2 id : SV_DispatchThreadID)
+{
+	int idx = id.x;
+
+	if (fmod(idx, BLOCK_SIZE) == 0) {
+		float3 pos = positionBuffer[idx];
+		pos = float3(0.0, sin(time + idx), 0.0);
+		//float3 tp = topPosBuffer[idx / BLOCK_SIZE];
+		//tp += curlNoise(float4(tp.x, tp.y, tp.z, time)) * 0.05;
+		//topPosBuffer[idx / BLOCK_SIZE] = tp;
+		//pos = topPosBuffer[idx / BLOCK_SIZE] = tp;
+		//pos = float3(0.0, sin(time*1.0 + idx*100.0), 0.0);
+		//pos = topPosBuffer + curlNoise(float4(topPosBuffer[], 0.0, 0.0, time)) * 0.01;
+		positionBuffer[idx] = pos;
+	}
+	else {
+		positionBuffer[idx] = positionBuffer[idx - 1];
+		//velocityBuffer[idx] = velocityBuffer[idx - 1];
+
+	}
+}
+

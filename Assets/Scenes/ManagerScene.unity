@@ -237,7 +237,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5045c075130fb134b9a82918d0414930, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  notes: 
 --- !u!1 &707991470
 GameObject:
   m_ObjectHideFlags: 0
@@ -295,11 +294,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 292416bde0046b841af6256e3060be6f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  oscData:
-    low: 0
-    kick: 0
-    rythm: 0
-    snare: 0
 --- !u!1 &1490077156
 GameObject:
   m_ObjectHideFlags: 0

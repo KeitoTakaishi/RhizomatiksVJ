@@ -26,6 +26,7 @@
 		struct Input
 		{
 			float2 uv_MainTex;
+			
 		};
 
 		struct appdata
@@ -54,6 +55,7 @@
 
 		int BLOCK_SIZE;
 		void vert(inout appdata v) {
+			
 #ifdef UNITY_PROCEDURAL_INSTANCING_ENABLED
 			uint _instanceID = (int)v.instanceID;
 			uint _vid = (int)v.vertexID;
@@ -76,8 +78,6 @@
 
 			float3 pos = positionBuffer[newVertexID];
 
-			
-
 			vert = mul(TranslateMatrix(pos), vert);
 			vert = mul(TranslateMatrix(float3(0.0, 15.0, 0.0)), vert);
 
@@ -99,6 +99,7 @@
 			uv.x *= 2.0;
 			uv.x = frac(uv.x);
             fixed4 c = tex2D (_MainTex, uv) * _Color;
+			
             o.Albedo = c.rgb;
             o.Metallic = _Metallic;
             o.Smoothness = _Glossiness;

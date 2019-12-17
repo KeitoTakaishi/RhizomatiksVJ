@@ -7,6 +7,7 @@
     SubShader
     {
         // No culling or depth
+		Tags { "RenderType" = "Overlay " }
         Cull Off ZWrite Off ZTest Always
 
         Pass

@@ -53,7 +53,17 @@ public class BoidsTrailRender : MonoBehaviour
     #endregion
 
     void Start()
+    { 
+        CreateMesh();
+        initInstancingParameter();
+        CreateBuffer();
+        initBuffer();
+        kernel = cs.FindKernel("update");
+    }
+
+    private void OnEnable()
     {
+        Debug.Log("awake");
         CreateMesh();
         initInstancingParameter();
         CreateBuffer();

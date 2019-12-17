@@ -36,6 +36,14 @@ public class GrayScott : MonoBehaviour
 
     }
 
+    private void OnEnable()
+    {
+        InitRenderTexture();
+        thread_size_x = 32;
+        thread_size_y = 32;
+        Init();
+    }
+
     void Update()
     {
         if(Input.GetKeyDown(KeyCode.I)){

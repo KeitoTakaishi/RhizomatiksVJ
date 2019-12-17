@@ -21,6 +21,7 @@ public class ModifyMesh : MonoBehaviour
 
     #region public data
     public Vector3[] points = new Vector3[3];
+    public bool scanDone = false;
     #endregion
 
     void Start()
@@ -34,12 +35,30 @@ public class ModifyMesh : MonoBehaviour
         bufferIndexArray = new int [indexCount];
         bufferIndexArray = mesh.GetIndices(0);
         mesh.GetIndices(0).CopyTo(bufferIndexArray, 0);
-    }
 
+        if(topologyType == TopologyType.lines)
+        {
+            mesh.SetIndices(index.ToArray(), MeshTopology.LineStrip, 0);
+        } else if(topologyType == TopologyType.triangles)
+        {
+            mesh.SetIndices(index.ToArray(), MeshTopology.Triangles, 0);
+        }
+    }
     
     float modelScale = 10.0f;
     void Update()
     {
+        scanVertex();
+        setTopology(scanDone);
+    }
+
+    void scanVertex()
+    {
+        if(Input.GetKeyDown(KeyCode.L))
+        {
+            RemoveIndex();
+        }
+
         if(curIndexCount + 3 < indexCount)
         {
             for(int i = (int)curIndexCount; i < curIndexCount + 3; i++)
@@ -48,18 +67,29 @@ public class ModifyMesh : MonoBehaviour
                 var v = mesh.vertices[index[i]] * modelScale;
                 points[i % 3] = new Vector3(-1 * v.x, v.y, v.z);
             }
+        } else
+        {
+            scanDone = true;
         }
         curIndexCount += 3;
+    }
 
-
-        if(topologyType == TopologyType.lines)
-        {
-            mesh.SetIndices(index.ToArray(), MeshTopology.LineStrip, 0);
-        }else if(topologyType == TopologyType.triangles)
+    void setTopology(bool scanDone)
+    {
+        if(scanDone)
         {
             mesh.SetIndices(index.ToArray(), MeshTopology.Triangles, 0);
+        } else
+        {
+            mesh.SetIndices(index.ToArray(), MeshTopology.LineStrip, 0);
         }
     }
 
+    public void RemoveIndex()
+    {
+        index.Clear();
+        curIndexCount = 0;
+        scanDone = false;
 
+    } 
 }

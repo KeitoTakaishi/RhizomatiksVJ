@@ -5,6 +5,9 @@
 #include "../Noise4d.cginc"
 #include "../NoiseUtils.cginc"
 
+
+//pulseを音量に合わせる
+
 RWStructuredBuffer<float3> positionBuffer;
 RWStructuredBuffer<float3> velocityBuffer;
 RWStructuredBuffer<float2> pulseBuffer;

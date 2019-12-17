@@ -5044,6 +5044,57 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+--- !u!1 &1114767387
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1114767389}
+  - component: {fileID: 1114767388}
+  m_Layer: 0
+  m_Name: RibbonTrail
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!114 &1114767388
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1114767387}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16bed778f49c6c244bfbc08c6edd8f11, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  trailNum: 100
+  trailResolution: 128
+  trailLength: 10
+  trailWidth: 0.1
+  dx: 0
+  cs: {fileID: 7200000, guid: 2030fad209ed38d4fb75f8a23049e115, type: 3}
+  srcMesh: {fileID: 0}
+  instancingMat: {fileID: 2100000, guid: 5550326fb4457464a9d2c3e57d75cd9c, type: 2}
+--- !u!4 &1114767389
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1114767387}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1279105414
 GameObject:
   m_ObjectHideFlags: 0
@@ -5191,8 +5242,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 245559541}
-  moveTimeLength: 20
-  radius: 5
+  moveTimeLength: 15
+  radius: 3
   type: 4
   isUp: 1
 --- !u!114 &1679750639

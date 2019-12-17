@@ -25,6 +25,11 @@ public class RingMesh : MonoBehaviour
         CreateMesh();
     }
 
+    private void OnEnable()
+    {
+        CreateMesh();
+    }
+
     void Update()
     {
         

@@ -19,6 +19,9 @@ public class CameraController : MonoBehaviour
     float t, v = 0;
     [SerializeField] EasingType type;
     [SerializeField] bool isUp = false;
+
+    //[SerializeField] JitterMotion jitterMotion;
+    //[SerializeField] ConstantMotion constantMotion;
     #endregion
 
    
@@ -53,9 +56,13 @@ public class CameraController : MonoBehaviour
 
         if(isMoving == false)
         {
+            //constantMotion.enabled = true;
+            //jitterMotion.enabled = true;
             //if(MidiReciever.notes[0] ||Input.GetKeyDown(KeyCode.A) || (target.position - this.transform.position).magnitude > 0.0f)
             if(MidiReciever.notes[0] ||Input.GetKeyDown(KeyCode.A))
             {
+                //constantMotion.enabled = false;
+                //jitterMotion.enabled = false;
                 isMoving = true;
                 t = v = 0;
                 curTime = 0;
