@@ -37,6 +37,7 @@ public class GPUPolygonTrail : MonoBehaviour
 
     [SerializeField] GameObject target;
     int pulse = 0;
+    public float blend = 0.0f;//blend * noise + (1.0 - blend) * taraget
 
     private void Awake()
     {
@@ -45,7 +46,10 @@ public class GPUPolygonTrail : MonoBehaviour
 
     void Start()
     {
-        CreateMesh();
+        if(srcMesh == null)
+        {
+            CreateMesh();
+        }
         InitInstancingParameter();
         CreateBuffers();
         InitBuffers();
@@ -53,8 +57,20 @@ public class GPUPolygonTrail : MonoBehaviour
 
     }
 
+    private void OnEnable()
+    {
+        
+        if(srcMesh == null)
+        {
+            CreateMesh();
+        }
+        InitInstancingParameter();
+        CreateBuffers();
+        InitBuffers();
+        kernel = cs.FindKernel("update");
+        
+    }
 
-    
     void Update()
     {
         /*
@@ -65,15 +81,15 @@ public class GPUPolygonTrail : MonoBehaviour
         */
 
 
-       if(Input.GetKeyDown(KeyCode.A)){
-       //if(osc.oscData.Kick == 1) { 
+       //if(Input.GetKeyDown(KeyCode.A)){
+       if(OscData.kick == 1) { 
             pulse = 1;
         }
 
         cs.SetFloat("time", Time.realtimeSinceStartup);
         //cs.SetInt("BLOCK_SIZE", trailPointNum);
         cs.SetInt("pulse", pulse);
-
+        cs.SetFloat("blend", blend);
         cs.SetBuffer(kernel, "positionBuffer", positionBuffer);
         cs.SetBuffer(kernel, "velocityBuffer", velocityBuffer);
         cs.SetBuffer(kernel, "pulseBuffer", pulseBuffer);
@@ -110,10 +126,11 @@ public class GPUPolygonTrail : MonoBehaviour
         float deltaUV = 1.0f / (circleResolution-1);
         for(int i = 0; i < trailPointNum; i++)
         {
+            radius = Random.Range(radius * 0.5f, radius);
             for(int j = 0; j < circleResolution; j++)
             {
 
-                if(i == 0) radius = 0.01f;
+                
                 var p = new Vector3(radius * Mathf.Cos(theta * j),
                                     radius * Mathf.Sin(theta * j),
                                     i * delta);

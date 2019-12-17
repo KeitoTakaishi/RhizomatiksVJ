@@ -18,6 +18,8 @@ public class RibbonTrail : MonoBehaviour
 
     #region ComputeShader
     [SerializeField] float dx;
+    [SerializeField] float dz;
+    public float amp;
     [SerializeField] ComputeShader cs;
     const int BLOCK_SIZE = 128;
     ComputeBuffer positionBuffer;
@@ -40,7 +42,7 @@ public class RibbonTrail : MonoBehaviour
 
     void Start()
     {
-       if(trailLength != BLOCK_SIZE)
+       if(trailResolution != BLOCK_SIZE)
         {
             Debug.Log("miss match");
         }
@@ -54,6 +56,12 @@ public class RibbonTrail : MonoBehaviour
     void Update()
     {
         kernel = cs.FindKernel("update");
+        cs.SetFloat("low", OscData.low);
+        cs.SetFloat("kick", OscData.kick);
+        cs.SetFloat("rythm", OscData.rythm);
+        cs.SetFloat("amp", amp);
+
+
         cs.SetBuffer(kernel, "positionBuffer", positionBuffer);
         cs.SetBuffer(kernel, "velocityBuffer", velocityBuffer);
         cs.SetBuffer(kernel, "normalBuffer", normalBuffer);
@@ -66,6 +74,7 @@ public class RibbonTrail : MonoBehaviour
 
         instancingMat.SetFloat("trailNum", trailNum);
         instancingMat.SetFloat("dx", dx);
+        instancingMat.SetFloat("dz", dz);
         instancingMat.SetBuffer("positionBuffer", positionBuffer);
         instancingMat.SetBuffer("velocityBuffer", velocityBuffer);
         instancingMat.SetBuffer("normalBuffer", normalBuffer);
@@ -118,7 +127,7 @@ public class RibbonTrail : MonoBehaviour
 
         srcMesh.vertices = verticesList.ToArray();
         srcMesh.normals = normalList.ToArray();
-        srcMesh.SetIndices(indexList.ToArray(), MeshTopology.Points, 0);
+        srcMesh.SetIndices(indexList.ToArray(), MeshTopology.LineStrip, 0);
     }
     //--------------------------------------------------------------------------------------------------------
     private void initInstancingParameter()

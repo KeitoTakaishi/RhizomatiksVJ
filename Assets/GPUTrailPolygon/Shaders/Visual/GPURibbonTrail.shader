@@ -56,7 +56,7 @@
 
 			int BLOCK_SIZE;
 			float trailNum;
-			float dx;
+			float dx, dz;
 			void vert(inout appdata v, out Input o) {
 				UNITY_INITIALIZE_OUTPUT(Input, o); 
 				o.uv_MainTex = float2(0.0, 0.0); 
@@ -83,7 +83,8 @@
 				vert = mul(TranslateMatrix(pos), vert);
 
 				float offSetX = (_instanceID*2.0 - trailNum) * dx;
-				vert = mul(TranslateMatrix(float3(offSetX, 0.0, 0.0)), vert);
+				vert = mul(TranslateMatrix(float3(offSetX, 0.0, dz*(BLOCK_SIZE / 2.0))), vert);
+				//vert = mul(TranslateMatrix(float3(offSetX, 0.0, 0.0)), vert);
 				//Translate-----------------------------
 				v.vertex = vert;
 				v.normal = normalBuffer[newVertexID];

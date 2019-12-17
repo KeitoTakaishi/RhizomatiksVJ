@@ -91,7 +91,7 @@ Shader "Custom/GPUPolygonTrail"
 
 
 				//instanceID offSet
-				vert = mul( TranslateMatrix(float3(_instanceID*2.0- trailNum, 0.0, 0.0)), vert);
+				vert = mul( TranslateMatrix(float3(5.0*(_instanceID*2.0- trailNum), 5.0, 0.0)), vert);
 				v.vertex = vert;
 	#endif
 			}

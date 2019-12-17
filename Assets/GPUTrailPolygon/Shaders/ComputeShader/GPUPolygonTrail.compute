@@ -14,6 +14,7 @@ RWStructuredBuffer<float2> pulseBuffer;
 
 float time;
 int pulse;
+float blend;
 
 THREAD
 void init (uint2 id : SV_DispatchThreadID)
@@ -41,7 +42,10 @@ void update(uint2 id : SV_DispatchThreadID)
 			
 			pulseBuffer[idx] = 0;
 		}
-		positionBuffer[idx] = target.xyz;
+
+		float3 pos = positionBuffer[idx];
+		float period = 0.01;
+		positionBuffer[idx] = (1.0-blend) * target.xyz + blend * curlNoise(float4(pos.x * period, pos.y * period, idx, time));
 		//velocityBuffer[idx] = float3(0.0, 0.0, 0.0);
 	}
 	else {
