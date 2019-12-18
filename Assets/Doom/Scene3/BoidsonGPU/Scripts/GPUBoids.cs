@@ -94,7 +94,7 @@ public class GPUBoids : MonoBehaviour
         if(isAudioReactive)
         {
             //low
-            if (kick > 0f)
+            if (OscData.kick > 0f)
             {
                 //Debug.Log("kick");
                 /*

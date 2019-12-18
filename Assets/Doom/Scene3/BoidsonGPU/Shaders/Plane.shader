@@ -3,6 +3,7 @@
     Properties
     {
         _MainTex ("Texture", 2D) = "white" {}
+		[HDR] _Color("col", color) = (0.0, 0.0, 0.0, 0.0)
     }
     SubShader
     {
@@ -44,7 +45,7 @@
             }
 
             sampler2D _MainTex;
-
+			fixed4 _Color;
             fixed4 frag (v2f i) : SV_Target
             {
                 fixed4 col = tex2D(_MainTex, i.uv);
@@ -59,7 +60,7 @@
 					col.rgb = float3(0.0, 0.0, 0.0);
 				}
 				else {
-					col.rgb = float3(0.4, 0.4, 0.4);
+					col.rgb = float3(0.4, 0.4, 0.4) * _Color;
 				}
 				
                 return col;

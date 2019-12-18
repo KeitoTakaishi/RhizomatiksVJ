@@ -90,7 +90,7 @@ namespace DoomScene
                 extrudeMat = rythmSpherer.GetComponent<MeshRenderer>().material;
             }
 
-
+            gpuBoids = gpuBoidsGameObject.GetComponent<GPUBoids>();
 
         }
 
@@ -146,18 +146,17 @@ namespace DoomScene
                 } else if(Input.GetKeyDown(KeyCode.E))
                 {
                     //prismParticle.SetActive(!prismParticle.activeSelf);
+                    NoiseBox.SetActive(!NoiseBox.activeSelf);
 
                 } else if(Input.GetKeyDown(KeyCode.R))
                 {
-                    NoiseBox.SetActive(!NoiseBox.activeSelf);
+                    humanModelPivot.SetActive(!humanModelPivot.activeSelf);
 
                 } else if(Input.GetKeyDown(KeyCode.T))
                 {
-                    humanModelPivot.SetActive(!humanModelPivot.activeSelf);
-                } else if(Input.GetKeyDown(KeyCode.Y))
-                {
+                    //humanModelPivot.SetActive(!humanModelPivot.activeSelf);
                     trailParticleSystem.SetActive(!trailParticleSystem.activeSelf);
-                }
+                } 
                   //go to scene3 
                   else if(Input.GetKeyDown(KeyCode.L))
                 {
@@ -168,6 +167,7 @@ namespace DoomScene
                     //triangleMeshParticle.SetActive(false);
                     //polygonParticle.SetActive(true);
                     camAnim.target = trailParticleSyste03.transform;
+                    RenderSettings.skybox = defaultSkyBox;
                 }
 
             } else if(curSectionID == 3)

@@ -40,6 +40,7 @@ namespace DoomScene
             wireFrameMaterial = wireFrameSphere.GetComponent<MeshRenderer>().material;
             //SecondSection
             ardt = NoiseBlock.GetComponent<AudioReactiveDoTween>();
+            gpuBoids = boidsGameObject.GetComponent<GPUBoids>();
         }
         void Start()
         {

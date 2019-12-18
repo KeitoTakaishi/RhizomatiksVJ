@@ -35,12 +35,13 @@ public class AttributeBaker : MonoBehaviour
 
     void Awake()
     {
-        initBuffer();  
+        
     }
 
     void Start()
     {
-        
+
+        initBuffer();
         BuildCamera();
         subCam.SetReplacementShader(MRTPass, "MRT");
     }
