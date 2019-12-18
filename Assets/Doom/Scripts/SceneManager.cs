@@ -9,6 +9,7 @@ namespace DoomScene
 
         #region public data
         public int curSectionID = 1;
+        public CameraAnimation camAnim;
         #endregion
 
         #region firstSection data
@@ -39,14 +40,29 @@ namespace DoomScene
 
         #region scene3 public data
         public GameObject thirdSection;
-        //public GameObject trailParticleSyste03;
+        public GameObject trailParticleSyste03;
         //public GameObject textParticleSyste03;
-        //public Material defaultSkyBox;
-        //public Material[] skyBoxMats = new Material[2];
+        public Material defaultSkyBox;
+        public Material[] skyBoxMats = new Material[2];
         //AudioReactiveText audioReactiveText;
-        //int skyBoxMode = 0;
+        int skyBoxMode = 0;
         //public GameObject polygonParticle;
         //public GameObject boxFontManager;
+        #endregion
+
+
+        #region scene4 public data
+        public GameObject fourthSection;
+        public GameObject walkingModel;
+        public GameObject gpuBoidsGameObject;
+        GPUBoids gpuBoids;
+        #endregion
+
+        #region scene5 public data
+        public GameObject fifthSection;
+        public AttributeBaker ab;
+        public GameObject fifthSectionCamTarget;
+        public GameObject pentagonMeshpartcile;
         #endregion
 
         private void Awake()
@@ -62,12 +78,20 @@ namespace DoomScene
         void Start()
         {
             //Debug.Log("Start");
+            curSectionID = 1;
+            camAnim.target = wireFarmeSphere.transform;
             if (wireFrameMat == null)
             {
                 wireFrameMat = wireFarmeSphere.GetComponent<MeshRenderer>().material;
-                extrudeMat = rythmSpherer.GetComponent<MeshRenderer>().material;
-                curSectionID = 1;
             }
+
+            if(extrudeMat == null)
+            {
+                extrudeMat = rythmSpherer.GetComponent<MeshRenderer>().material;
+            }
+
+
+
         }
 
         void Update()
@@ -141,10 +165,70 @@ namespace DoomScene
                     curSectionID = 3;
                     secondSection.SetActive(false);
                     //prismParticle.SetActive(false);
-                    triangleMeshParticle.SetActive(false);
+                    //triangleMeshParticle.SetActive(false);
                     //polygonParticle.SetActive(true);
+                    camAnim.target = trailParticleSyste03.transform;
                 }
 
+            } else if(curSectionID == 3)
+            {
+                if(Input.GetKeyDown(KeyCode.Q))
+                {
+                    //doom.SetActive(!doom.activeSelf);
+
+                } else if(Input.GetKeyDown(KeyCode.W))
+                {
+                    skyBoxMode += 1;
+                    RenderSettings.skybox = skyBoxMats[(skyBoxMode) % 2];
+                } else if(Input.GetKeyDown(KeyCode.E))
+                {
+                    //boxFontManager.SetActive(!boxFontManager.activeSelf);
+                } else if(Input.GetKeyDown(KeyCode.R))
+                {
+                    trailParticleSyste03.SetActive(!trailParticleSyste03.activeSelf);
+                } else if(Input.GetKeyDown(KeyCode.T))
+                {
+                    //textParticleSyste03.SetActive(!textParticleSyste03.activeSelf);
+
+                } else if(Input.GetKeyDown(KeyCode.Y))
+                {
+                    //polygonParticle.SetActive(!polygonParticle.activeSelf);
+
+                } else if(Input.GetKeyDown(KeyCode.M))
+                {
+                    thirdSection.SetActive(false);
+                    fourthSection.SetActive(true);
+                    camAnim.target = walkingModel.transform;
+                    RenderSettings.skybox = defaultSkyBox;
+                    //polygonParticle.SetActive(false);
+                    curSectionID = 4;
+                }
+            } else if(curSectionID == 4)
+            {
+                if(Input.GetKeyDown(KeyCode.Q))
+                {
+                    //gpuBoidsGameObject.SetActive(!gpuBoidsGameObject.activeSelf);
+                    gpuBoidsGameObject.SetActive(true);
+
+                } else if(Input.GetKeyDown(KeyCode.W))
+                {
+                    gpuBoids.isAudioReactive = !gpuBoids.isAudioReactive;
+                }
+                 //change 4th stage
+                 else if(Input.GetKeyDown(KeyCode.P))
+                {
+                    ab.enabled = true;
+                    fourthSection.SetActive(false);
+                    fifthSection.SetActive(true);
+                    camAnim.target = fifthSectionCamTarget.transform;
+                    curSectionID = 5;
+                }
+            } else if(curSectionID == 5)
+            {
+                if(Input.GetKeyDown(KeyCode.Q))
+                {
+                    pentagonMeshpartcile.SetActive(!pentagonMeshpartcile.activeSelf);
+                }
             }
         }
     }

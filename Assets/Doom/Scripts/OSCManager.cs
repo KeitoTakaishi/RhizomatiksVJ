@@ -23,6 +23,16 @@ namespace DoomScene
         public Material UpdateMesh;
         #endregion
 
+        #region munipulate data4
+        public GameObject boidsGameObject;
+        GPUBoids gpuBoids;
+        #endregion
+
+        #region munipulate data5
+        public Material instancingHairMat;
+        public Material instancingParticleMat;
+        #endregion
+
         private void Awake()
         {
             //FirstSection
@@ -61,6 +71,16 @@ namespace DoomScene
                 {
                     ardt.KickDetection = 1;
                 }
+            } else if(sceneManager.curSectionID == 4)
+            {
+                gpuBoids.low = OscData.low;
+                gpuBoids.kick = OscData.kick;
+            } else if(sceneManager.curSectionID == 5)
+            {
+
+                instancingHairMat.SetFloat("scaleZ", OscData.low);
+                instancingParticleMat.SetFloat("_power", OscData.low);
+
             }
         }
     }

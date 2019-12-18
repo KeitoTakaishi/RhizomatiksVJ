@@ -19,7 +19,8 @@ public class AttributeBaker : MonoBehaviour
     private RenderTexture[] renderTexture;
     private RenderBuffer[] renderBuffer;
     private RenderBuffer depthBuffer;
-    private Camera subCam;
+    [SerializeField] private Camera subCam;
+    //[SerializeField] private GameObject subCamObject;
     #endregion
 
     public bool isDebug = false;
@@ -55,6 +56,7 @@ public class AttributeBaker : MonoBehaviour
     void BuildCamera()
     {
         var obj = new GameObject("SubCam");
+        //var obj = subCamObject;
         obj.transform.parent = renderTargetObject.transform;
         obj.transform.localPosition = Vector3.zero;
         obj.transform.localRotation = Quaternion.identity;
