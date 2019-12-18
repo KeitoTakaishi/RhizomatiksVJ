@@ -6,6 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/ManagerScene.unity
+    guid: d9fe274dbd334d94e9386848d0dfc99f
+  - enabled: 1
     path: Assets/Scenes/VaporWave.unity
     guid: 1265f5dfbc4b6f34db37b749e41dd563
   - enabled: 1
@@ -17,4 +20,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/GPUCollisionParticle.unity
     guid: afef02f58325d644d99544ca258d99ea
+  - enabled: 1
+    path: Assets/Scenes/Doom.unity
+    guid: 4786ce2553df55b4bb70e963531c8e70
   m_configObjects: {}

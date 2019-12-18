@@ -12,7 +12,7 @@ public class SceneManager1 : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha1))
+        if (Input.GetKeyDown(KeyCode.Q))
         {
             if (!doom.activeSelf)
             {

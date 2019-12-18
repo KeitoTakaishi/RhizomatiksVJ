@@ -23,7 +23,7 @@
 				#pragma fragment frag
 
 				#include "UnityCG.cginc"	
-				#include "..//NoiseUtils.cginc"
+				#include "NoiseUtils.cginc"
 
 
 				struct appdata

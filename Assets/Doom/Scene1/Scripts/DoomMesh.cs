@@ -4,7 +4,7 @@ using UnityEngine;
 
 [RequireComponent(typeof(MeshFilter), typeof(MeshRenderer))]
 [ExecuteInEditMode]
-public class DoomMesh : MonoBehaviour
+public class Doom : MonoBehaviour
 {
 
     Vector3 vertices;

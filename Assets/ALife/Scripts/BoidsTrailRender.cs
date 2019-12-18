@@ -63,7 +63,6 @@ public class BoidsTrailRender : MonoBehaviour
 
     private void OnEnable()
     {
-        Debug.Log("awake");
         CreateMesh();
         initInstancingParameter();
         CreateBuffer();

@@ -95,12 +95,12 @@ public class AudioReactiveDoTween : MonoBehaviour
            .OnComplete(() => isRotateCamplete = true)
            .SetRelative();
         }
-
+        
     }
 
     void TweenScale()
     {
-
+        
         isScaleCamplete = false;
         var mode = UnityEngine.Random.Range(0f, 1f);
         var expand = UnityEngine.Random.Range(5.0f, 40.0f);
@@ -151,9 +151,6 @@ public class AudioReactiveDoTween : MonoBehaviour
                .OnComplete(() => isScaleCamplete = true)
                );
         }
-
-      
-       
     }
 
     void TweenScaleComp()

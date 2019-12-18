@@ -10,8 +10,8 @@ public class InputManager : MonoBehaviour
 
     #region scene1 public data
     public GameObject cam;
-    CameraAnimation camAnim;
-    PostEffectApply postEffectApply;
+    //CameraAnimation camAnim;
+    //PostEffectApply postEffectApply;
 
     public GameObject firstSection;
     public GameObject wireFarmeSphere;
@@ -75,8 +75,8 @@ public class InputManager : MonoBehaviour
 
     private void Awake()
     {
-        camAnim = cam.GetComponent<CameraAnimation>();
-        postEffectApply = cam.GetComponent<PostEffectApply>();
+        //camAnim = cam.GetComponent<CameraAnimation>();
+        //postEffectApply = cam.GetComponent<PostEffectApply>();
         wireFrameMaterial = wireFarmeSphere.GetComponent<MeshRenderer>().material;
         extrude = rythmSpherer.GetComponent<MeshRenderer>().material;
         //sceneID = 1;
@@ -100,13 +100,13 @@ public class InputManager : MonoBehaviour
         //effect tyoe-----------------------------------
         if(Input.GetKey(KeyCode.Z))
         {
-            postEffectApply.SwitchMode = SwitchModes.HumanMode;
+            //postEffectApply.SwitchMode = SwitchModes.HumanMode;
         } else if(Input.GetKey(KeyCode.X))
         {
-            postEffectApply.SwitchMode = SwitchModes.AutoMode;
+            //postEffectApply.SwitchMode = SwitchModes.AutoMode;
         } else if(Input.GetKey(KeyCode.C))
         {
-            postEffectApply.SwitchMode = SwitchModes.MomentaryHumanMode;
+            //postEffectApply.SwitchMode = SwitchModes.MomentaryHumanMode;
         }
 
         if(Input.GetKeyDown(KeyCode.D))
@@ -159,7 +159,7 @@ public class InputManager : MonoBehaviour
                 sectionID = 2;
                 firstSection.SetActive(false);
                 secondSection.SetActive(!secondSection.activeSelf);
-                camAnim.target = humanModelPivot.transform;
+                //camAnim.target = humanModelPivot.transform;
                 NoiseBox.SetActive(true);
 
             }
@@ -191,7 +191,7 @@ public class InputManager : MonoBehaviour
               else if(Input.GetKeyDown(KeyCode.L))
             {
                 thirdSection.SetActive(true);
-                camAnim.target = trailParticleSyste03.transform;
+                //camAnim.target = trailParticleSyste03.transform;
                 sectionID = 3;
                 secondSection.SetActive(false);
                 prismParticle.SetActive(false);
@@ -227,7 +227,7 @@ public class InputManager : MonoBehaviour
             {
                 thirdSection.SetActive(false);
                 fourthSection.SetActive(true);
-                camAnim.target = walkingModel.transform;
+                //camAnim.target = walkingModel.transform;
                 RenderSettings.skybox = defaultSkyBox;
                 polygonParticle.SetActive(false);
                 sectionID = 4;
@@ -248,7 +248,7 @@ public class InputManager : MonoBehaviour
             {
                 fourthSection.SetActive(false);
                 fifthSection.SetActive(true);
-                camAnim.target = fifthSectionCamTarget.transform;
+                //camAnim.target = fifthSectionCamTarget.transform;
                 sectionID = 5;
             }
          }

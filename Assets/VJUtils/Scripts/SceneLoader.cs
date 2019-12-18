@@ -38,6 +38,9 @@ public class SceneLoader : MonoBehaviour
         } else if(Input.GetKeyDown(KeyCode.Alpha4))
         {
             SceneManager.LoadScene("GPUCollisionParticle");
+        } else if(Input.GetKeyDown(KeyCode.Alpha5))
+        {
+            SceneManager.LoadScene("Doom");
         }
     }
 }

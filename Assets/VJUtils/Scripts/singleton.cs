@@ -15,5 +15,8 @@ public class singleton : MonoBehaviour
         }
         exist = true;
         DontDestroyOnLoad(gameObject);
+
+        Cursor.visible = false;
+
     }
 }
