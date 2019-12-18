@@ -1,0 +1,134 @@
+﻿/*
+thread数自体は三角形の個数しかないけど，そのなかで三頂点分の計算をしていて，
+bufferは三角形の個数x3子分あるからそこに格納していくスタイル
+賢い
+*/
+
+#pragma kernel Update
+
+#include "UnityCG.cginc"
+//#include "SimplexNoise3D.cginc"
+#include "noise4D.cginc"
+
+float3 snoise3D(float4 x)
+{
+	float s = snoise(x);
+	float s1 = snoise(float4(x.y - 19.1, x.z + 33.4, x.x + 47.2, x.w));
+	float s2 = snoise(float4(x.z + 74.2, x.x - 124.5, x.y + 99.4, x.w));
+	float3 c = float3(s, s1, s2);
+	return c;
+}
+
+float3 curlNoise(float4 p) {
+
+	const float e = 0.0009765625;
+	float4 dx = float4(e, 0.0, 0.0, 0.0);
+	float4 dy = float4(0.0, e, 0.0, 0.0);
+	float4 dz = float4(0.0, 0.0, e, 0.0);
+
+	float3 p_x0 = snoise3D(p - dx);
+	float3 p_x1 = snoise3D(p + dx);
+	float3 p_y0 = snoise3D(p - dy);
+	float3 p_y1 = snoise3D(p + dy);
+	float3 p_z0 = snoise3D(p - dz);
+	float3 p_z1 = snoise3D(p + dz);
+
+	float x = p_y1.z - p_y0.z - p_z1.y + p_z0.y;
+	float y = p_z1.x - p_z0.x - p_x1.z + p_x0.z;
+	float z = p_x1.y - p_x0.y - p_y1.x + p_y0.x;
+
+	const float divisor = 1.0 / (2.0 * e);
+	return normalize(float3(x, y, z) * divisor);
+}
+
+RWStructuredBuffer<float4> PositionBuffer;
+RWStructuredBuffer<float4> NormalBuffer;
+RWStructuredBuffer<float > LifeBuffer;
+
+float Time;
+float maxLife;
+float noiseScale;
+float positionScale;
+float4 force;
+
+
+float Random(float u, float v)
+{
+	float f = dot(float2(12.9898, 78.233), float2(u, v));
+	return frac(43758.5453 * sin(f));
+}
+
+float3 RandomPoint(float id)
+{
+	float u = Random(id * 0.01334, 0.3728) * UNITY_PI * 2;
+	float z = Random(0.8372, id * 0.01197) * 2 - 1;
+	return float3(float2(cos(u), sin(u)) * sqrt(1 - z * z), z);
+}
+
+
+[numthreads(64, 1, 1)]
+void Update(uint id : SV_DispatchThreadID)
+{
+
+	float life = LifeBuffer[id];
+	float lifeSpeed = 0.003;
+	
+	int idx1 = id * 3;
+	int idx2 = id * 3 + 1;
+	int idx3 = id * 3 + 2;
+
+	if (life < 0) {
+		float seed = floor(Time + id * 0.1) * 0.1;
+		float3 v1 = RandomPoint(idx1 + seed);
+		float3 v2 = RandomPoint(idx2 + seed);
+		float3 v3 = RandomPoint(idx3 + seed);
+
+		float3 n = normalize(cross(v2 - v1, v3 - v2));
+
+		PositionBuffer[idx1] = float4(v1, 0);
+		PositionBuffer[idx2] = float4(v2, 0);
+		PositionBuffer[idx3] = float4(v3, 0);
+
+		NormalBuffer[idx1] = float4(n, 0) ;
+		NormalBuffer[idx2] = float4(n, 0) ;
+		NormalBuffer[idx3] = float4(n, 0) ;
+
+		LifeBuffer[id] = maxLife;
+	}
+	else {
+		//float3 velocity = float3(0.0, 0.01, 0.0);
+		float3 v1 = PositionBuffer[idx1];
+		float3 v2 = PositionBuffer[idx2];
+		float3 v3 = PositionBuffer[idx3];
+		float3 center = (v1 + v2 + v3) / 3.0;
+
+		
+		float timeSpeed = 0.1;
+		
+		center *= positionScale;
+
+		float3 curl = curlNoise(float4(center.x, center.y, center.z, Time * timeSpeed)) * noiseScale;
+
+		
+		v1 += curl + force.xyz;
+		v2 += curl + force.xyz;
+		v3 += curl + force.xyz;
+
+		float3 n = normalize(cross(v2 - v1, v3 - v2));
+
+		PositionBuffer[idx1] = float4(v1, 0);
+		PositionBuffer[idx2] = float4(v2, 0);
+		PositionBuffer[idx3] = float4(v3, 0);
+
+		NormalBuffer[idx1] = float4(n, 0);
+		NormalBuffer[idx2] = float4(n, 0);
+		NormalBuffer[idx3] = float4(n, 0);
+
+		life -= lifeSpeed;
+		LifeBuffer[id] = life;
+	}
+	
+
+	
+	
+}
