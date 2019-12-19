@@ -14,6 +14,7 @@ public class ImageEffectManager : MonoBehaviour
     [SerializeField] PostEffect.ScanLine scanLine;
     [SerializeField] PostEffect.WhiteNoiseGlitch whiteNoiseGlitch;
     [SerializeField] PostEffect.Displacement displacement;
+    [SerializeField] PostEffect.GridFlash gridFlash;
     
     [SerializeField] float negativeEffectTime;
     [SerializeField] float symmetryEffectTime;
@@ -28,6 +29,7 @@ public class ImageEffectManager : MonoBehaviour
     bool isScanLine = false;
     bool isWhiteNoiseGlitch = false;
     bool isDisplacement = false;
+    bool isGridFlash = false;
 
 
     [SerializeField] float maxDistortionPower;
@@ -116,6 +118,7 @@ public class ImageEffectManager : MonoBehaviour
         sliceGlitch.enabled = false;
         scanLine.enabled = false;
         whiteNoiseGlitch.enabled = false;
+        gridFlash.enabled = false;
     }
 
     void Start()
@@ -219,6 +222,16 @@ public class ImageEffectManager : MonoBehaviour
                 displacement.type = 1;
             }
             StartCoroutine("DisplacementEffectEffect");
+        }else if(Input.GetKeyDown(KeyCode.F11))
+        {
+            isGridFlash = !isGridFlash;
+            if(isGridFlash)
+            {
+                gridFlash.enabled = true;
+            } else
+            {
+                gridFlash.enabled = false;
+            }
         }
     }
 }

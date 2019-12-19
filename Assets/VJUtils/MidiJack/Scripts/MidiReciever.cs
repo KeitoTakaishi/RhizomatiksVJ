@@ -72,41 +72,46 @@ public class MidiReciever : MonoBehaviour
 
     void Knob(MidiChannel channel, int knobNumber, float knobValue)
     {
-
+        //Debug.Log("knobNumber" + knobNumber);
+        //Debug.Log("knobNumber" + knobNumber);
+        //switch(knobNumber)
         switch(knobNumber)
         {
-            case 1:
+            case 0:
                 knobs[0] = knobValue;
-                Debug.Log("0 : " + knobs[0]);
+               //Debug.Log("0 : " + knobs[0]);
+                break;
+            case 1:
+                knobs[1] = knobValue;
+                //Debug.Log("1 : " + knobs[1]);
                 break;
             case 2:
-                knobs[1] = knobValue;
-                Debug.Log("1 : " + knobs[1]);
+                knobs[2] = knobValue;
+                //Debug.Log("2 : " + knobs[2]);
                 break;
             case 3:
-                knobs[2] = knobValue;
-                Debug.Log("2 : " + knobs[2]);
+                knobs[3] = knobValue;
+                //Debug.Log("3 : " + knobs[3]);
                 break;
             case 4:
-                knobs[3] = knobValue;
-                Debug.Log("3 : " + knobs[3]);
+                knobs[4] = knobValue;
+                //Debug.Log("4 : " + knobs[4]);
                 break;
             case 5:
-                knobs[4] = knobValue;
-                Debug.Log("4 : " + knobs[4]);
-                break;
-            case 6:
-                break;
+               
                 knobs[5] = knobValue;
                 Debug.Log("5 : " + knobs[5]);
-            case 7:
                 break;
+            case 6:
+               
                 knobs[6] = knobValue;
-                Debug.Log("6 : " + knobs[6]);
-            case 8:
+                //Debug.Log("6 : " + knobs[6]);
                 break;
+            case 7:
+   
                 knobs[7] = knobValue;
-                Debug.Log("7 : " + knobs[7]);
+                //Debug.Log("7 : " + knobs[7]);
+                break;
             default:
                 break;
         }

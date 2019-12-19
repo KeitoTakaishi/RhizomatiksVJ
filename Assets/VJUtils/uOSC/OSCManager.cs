@@ -11,6 +11,7 @@ static public class OscData
     public static float kick;
     public static float rythm;
     public static float snare;
+    public static float scene;
 
     /*
     public OscData(float l, float k, float r, float s)
@@ -67,8 +68,10 @@ public class OSCManager : MonoBehaviour
 
         // address
         var address = message.address;
-        switch (address)
+  
+        switch(address)
         {
+            
             case "/Low":
                 //Debug.Log(message.values[0]);
                 OscData.low = float.Parse (message.values[0].ToString());
@@ -88,6 +91,37 @@ public class OSCManager : MonoBehaviour
                 //Debug.Log(message.values[0]);
                 OscData.snare= float.Parse(message.values[0].ToString());
                 break;
-        } 
+
+            case "/scene1":
+                if( float.Parse(message.values[0].ToString()) == 1.0f ){
+                    OscData.scene = 1;
+                }
+                
+                break;
+
+            case "/scene2":
+                if(float.Parse(message.values[0].ToString()) == 1.0f)
+                {
+
+                    OscData.scene = 2;
+                }
+                break;
+
+            case "/scene3":
+                if(float.Parse(message.values[0].ToString()) == 1.0f)
+                {
+                    OscData.scene = 3;
+                }
+                break;
+
+            case "/scene4":
+                if(float.Parse(message.values[0].ToString()) == 1.0f)
+                {
+                    OscData.scene = 5;
+                }
+                break;
+        }
+
+        //Debug.Log(OscData.scene);
     }
 }

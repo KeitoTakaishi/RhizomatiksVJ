@@ -9,6 +9,7 @@
 			CGINCLUDE
 			#include "UnityCG.cginc"
 			#include "UnityLightingCommon.cginc"
+			#include "../Noise4d.cginc"
 		//#include "AutoLight.cginc"
 		#pragma multi_compile_fog
 
@@ -40,6 +41,7 @@
 				// 1pass
 				//ポジションを posという名前にしなければ計算できない
 				//----------------------------------------------------------------
+				float kick;
 				v2f vert(appdata_full v, uint instanceID : SV_InstanceID)
 				{
 				#if SHADER_TARGET >= 45
@@ -54,6 +56,13 @@
 
 					//モデルの大きさがn倍になればローカル座標もn倍になるのは普通
 					float3 localPosition = v.vertex.xyz * data.w;
+
+					float offset = instanceID * 100.0 + v.vertex.x*10.0 + v.vertex.y*10.0 + v.vertex.z;
+					float per = 300.0;
+					float noise = snoise(float4(v.vertex.x*per, v.vertex.y*per, v.vertex.z*per, _Time.y + instanceID));
+
+					localPosition += v.normal * kick * step(noise , 0.95)*noise;
+
 					float3 worldPosition = data.xyz + localPosition;
 					float3 worldNormal = v.normal;
 

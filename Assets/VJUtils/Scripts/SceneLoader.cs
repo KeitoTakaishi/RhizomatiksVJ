@@ -7,6 +7,9 @@ public class SceneLoader : MonoBehaviour
 {
     SceneLoader instance;
 
+    [SerializeField] KeyCode[] sceneKey;
+    
+
     private void Awake()
     {
         if(instance != null)
@@ -21,26 +24,38 @@ public class SceneLoader : MonoBehaviour
     }
     void Start()
     {
-       
+        Cursor.visible = false;
     }
 
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Alpha1))
+        
+        //if(Input.GetKeyDown(sceneKey[0]))
+        if(OscData.scene == 1)
         {
             SceneManager.LoadScene("VaporWave");
-        }else if(Input.GetKeyDown(KeyCode.Alpha2))
+        }
+        //else if(Input.GetKeyDown(sceneKey[1]))
+        else if(OscData.scene == 2)
         {
             SceneManager.LoadScene("ALife");
-        } else if(Input.GetKeyDown(KeyCode.Alpha3))
+        }
+        //else if(Input.GetKeyDown(sceneKey[2]))
+         else if(OscData.scene == 3)
         {
             SceneManager.LoadScene("GPUPolygonTrail");
-        } else if(Input.GetKeyDown(KeyCode.Alpha4))
+        }
+        //else if(Input.GetKeyDown(sceneKey[3]))
+         else if(OscData.scene == 4)
         {
             SceneManager.LoadScene("GPUCollisionParticle");
-        } else if(Input.GetKeyDown(KeyCode.Alpha5))
+        }
+         //else if(Input.GetKeyDown(sceneKey[4]))
+         else if(OscData.scene == 5)
         {
             SceneManager.LoadScene("Doom");
         }
+
+        OscData.scene = 0;
     }
 }

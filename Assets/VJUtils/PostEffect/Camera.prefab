@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 3132490676140347452}
   - component: {fileID: 9124153542995124519}
   - component: {fileID: 4578531411525273162}
+  - component: {fileID: 4597716296882600376}
   - component: {fileID: 2501262592799231001}
   m_Layer: 0
   m_Name: Camera
@@ -240,6 +241,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shader: {fileID: 4800000, guid: f8e6bcef9212f7d47a8f42c2c45bb372, type: 3}
+--- !u!114 &4597716296882600376
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2501262592799230998}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d3abe33d68446564ea20b305e07f54bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shader: {fileID: 4800000, guid: 495eb9831c83e42498cec715559363f1, type: 3}
 --- !u!114 &2501262592799231001
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -262,6 +276,7 @@ MonoBehaviour:
   scanLine: {fileID: 315041454393588824}
   whiteNoiseGlitch: {fileID: 3132490676140347452}
   displacement: {fileID: 9124153542995124519}
+  gridFlash: {fileID: 4597716296882600376}
   negativeEffectTime: 0.1
   symmetryEffectTime: 1
   distortionEffectTime: 0.35

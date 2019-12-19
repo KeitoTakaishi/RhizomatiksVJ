@@ -6,6 +6,7 @@ public class CameraController : MonoBehaviour
 {
 
     #region private data
+    [SerializeField] bool isMidiIn;
     Camera camera;
     [SerializeField] Transform target;
     [SerializeField] int moveTimeLength = 60; //何秒かけて目的地まで行くか
@@ -46,6 +47,7 @@ public class CameraController : MonoBehaviour
 
     void Start()
     {
+        Cursor.visible = false;
         startPosition = this.transform.position;
         camera.transform.position = dir * v + startPosition;
         camera.transform.LookAt(target, Vector3.up);
@@ -53,6 +55,13 @@ public class CameraController : MonoBehaviour
 
     void Update()
     {
+
+        if(isMidiIn)
+        {
+            Debug.Log(MidiReciever.knobs[5]);
+            radius = MidiReciever.knobs[5] * 30 + 2.0f;
+            moveTimeLength = (int)(MidiReciever.knobs[6] * 30) + 10;
+        }
 
         if(isMoving == false)
         {

@@ -67,14 +67,15 @@ public class CameraAnimation : MonoBehaviour
 
     void Start()
     {
+        Cursor.visible = false;
         _nextPos = new Vector3();
         _curPos = new Vector3();
     }
 
     private void Update()
     {
-        _radius = MidiReciever.knobs[0] * 100.0f;
-        _interval = (int) (MidiReciever.knobs[1] * 100) + 20;
+        //_radius = MidiReciever.knobs[0] * 100.0f;
+        //_interval = (int) (MidiReciever.knobs[1] * 100) + 20;
 
 
 

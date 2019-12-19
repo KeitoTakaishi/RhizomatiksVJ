@@ -20,9 +20,9 @@ namespace GPUTrailPolygon
 
         void Update()
         {
-            audioReactiveTrail.amp = MidiReciever.knobs[0] * meshaAmpRange;
-            cross.scale = MidiReciever.knobs[1] * crossAmpRange;
-            polygonTrail.blend = MidiReciever.knobs[2];
+            audioReactiveTrail.amp = MidiReciever.knobs[1] * meshaAmpRange;
+            cross.scale = MidiReciever.knobs[2] * crossAmpRange;
+            polygonTrail.blend = MidiReciever.knobs[3];
         }
     }
 }
