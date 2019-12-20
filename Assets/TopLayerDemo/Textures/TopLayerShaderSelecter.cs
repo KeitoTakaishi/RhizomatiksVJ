@@ -9,6 +9,7 @@ public class TopLayerShaderSelecter : MonoBehaviour
     [SerializeField] Material[] filter;
     [SerializeField]int interval;
     int index;
+    //bool isActive = false;
     void Start()
     {
         index = 0;
@@ -16,10 +17,11 @@ public class TopLayerShaderSelecter : MonoBehaviour
 
     void Update()
     {
+
         img.material = filter[index];
         if(Time.frameCount % interval == 0)
         {
-            Debug.Log(index);
+            //Debug.Log(index);
             index = ((int)( Random.Range(0, filter.Length))) % filter.Length; 
            
         }

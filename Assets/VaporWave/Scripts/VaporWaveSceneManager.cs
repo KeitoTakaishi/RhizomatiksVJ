@@ -18,11 +18,15 @@ public class VaporWaveSceneManager : MonoBehaviour
     [SerializeField] private GameObject[] log;
     [SerializeField] private GameObject ring;
     [SerializeField] private GameObject triangleMeshParticleSystem;
+    [SerializeField] private GameObject Statue;
+
     #endregion
 
     #region material data
     [SerializeField] private Material floorDefault;
     [SerializeField] private Material floorEffect;
+    [SerializeField] private Material statueModelMaterial;
+    [SerializeField] private Material DissolveMaterial;
     #endregion
 
     #region mode
@@ -46,12 +50,12 @@ public class VaporWaveSceneManager : MonoBehaviour
     {
 
         //BarcodeBoids
-        if(Input.GetKeyDown(KeyCode.Q))
+        if(Input.GetKeyDown(KeyCode.W))
         {
             gpuTrailBarcode.SetActive(true);
         }
         //AudioReactiveFloor
-        else if(Input.GetKeyDown(KeyCode.W))
+        else if(Input.GetKeyDown(KeyCode.Q))
         {
             floorMaterialType = (floorMaterialType + 1) % 2;
             if(floorMaterialType == 0)
@@ -60,8 +64,7 @@ public class VaporWaveSceneManager : MonoBehaviour
             } else
             {
                 floor.GetComponent<MeshRenderer>().material = floorEffect;
-            }
-            
+            }   
         }
         else if(Input.GetKeyDown(KeyCode.E))
         {
@@ -71,7 +74,13 @@ public class VaporWaveSceneManager : MonoBehaviour
         else if(Input.GetKeyDown(KeyCode.R))
         {
             ring.SetActive(true);
-        } else if(Input.GetKeyDown(KeyCode.T))
+        }
+        else if(Input.GetKeyDown(KeyCode.T))
+        {
+            Statue.GetComponent<MeshRenderer>().material = DissolveMaterial;
+        }
+
+        else if(Input.GetKeyDown(KeyCode.Y))
         {
             triangleMeshParticleSystemActive = (triangleMeshParticleSystemActive + 1) % 2;
             if(triangleMeshParticleSystemActive == 0)

@@ -100,7 +100,7 @@ public class MidiReciever : MonoBehaviour
             case 5:
                
                 knobs[5] = knobValue;
-                Debug.Log("5 : " + knobs[5]);
+                //Debug.Log("5 : " + knobs[5]);
                 break;
             case 6:
                

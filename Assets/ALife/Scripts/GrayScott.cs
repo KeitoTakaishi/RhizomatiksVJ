@@ -46,7 +46,7 @@ public class GrayScott : MonoBehaviour
 
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.I)){
+        if(Input.GetKeyDown(KeyCode.W)){
             //Init();
             RandomSet();
         }

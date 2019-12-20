@@ -73,7 +73,7 @@ Material:
     - _UVSec: 0
     - _ZWrite: 1
     - _colorMode: 0
-    - _extrude: 0.4
+    - _extrude: 0
     - _frequence: 3.2
     - _timeSpeed: 2.5
     m_Colors:

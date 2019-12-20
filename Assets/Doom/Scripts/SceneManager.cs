@@ -65,6 +65,13 @@ namespace DoomScene
         public GameObject pentagonMeshpartcile;
         #endregion
 
+
+
+        #region General
+        [SerializeField] GameObject topLayer;
+        bool isActive = false;
+
+        #endregion
         private void Awake()
         {
             //Debug.Log("Awake");
@@ -96,6 +103,12 @@ namespace DoomScene
 
         void Update()
         {
+            if(Input.GetKeyDown(KeyCode.B))
+            {
+                isActive = !isActive;
+                 topLayer.SetActive(isActive);
+            }
+
             if(curSectionID == 1)
             {
                 if(Input.GetKeyDown(KeyCode.Q))
@@ -196,12 +209,14 @@ namespace DoomScene
 
                 } else if(Input.GetKeyDown(KeyCode.M))
                 {
+                    Debug.Log("curSection" + curSectionID);
                     thirdSection.SetActive(false);
                     fourthSection.SetActive(true);
                     camAnim.target = walkingModel.transform;
                     RenderSettings.skybox = defaultSkyBox;
                     //polygonParticle.SetActive(false);
                     curSectionID = 4;
+                    Debug.Log("curSection" + curSectionID);
                 }
             } else if(curSectionID == 4)
             {

@@ -12,6 +12,8 @@ public class AlifeSceneManager : MonoBehaviour
 
     #region gameobject data
     [SerializeField] GameObject grayScottSimurator;
+    [SerializeField] GameObject Boids;
+    bool isBoid = false;
     #endregion
 
     #region RenderTexture
@@ -40,6 +42,10 @@ public class AlifeSceneManager : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.Q))
         {
             grayScottSimurator.SetActive(true);
+        }else if(Input.GetKeyDown(KeyCode.E))
+        {
+            //isBoid = !isBoid;
+            Boids.SetActive(true);
         }
     }
 }

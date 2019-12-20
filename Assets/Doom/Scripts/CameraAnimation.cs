@@ -74,8 +74,8 @@ public class CameraAnimation : MonoBehaviour
 
     private void Update()
     {
-        //_radius = MidiReciever.knobs[0] * 100.0f;
-        //_interval = (int) (MidiReciever.knobs[1] * 100) + 20;
+        _radius = MidiReciever.knobs[1] * 100.0f;
+        _interval = (int) (MidiReciever.knobs[2] * 100) + 20;
 
 
 

@@ -58,9 +58,9 @@ public class CameraController : MonoBehaviour
 
         if(isMidiIn)
         {
-            Debug.Log(MidiReciever.knobs[5]);
-            radius = MidiReciever.knobs[5] * 30 + 2.0f;
-            moveTimeLength = (int)(MidiReciever.knobs[6] * 30) + 10;
+            //Debug.Log(MidiReciever.knobs[5]);
+            radius = MidiReciever.knobs[1] * 60 + 2.0f;
+            moveTimeLength = (int)(MidiReciever.knobs[2] * 30) + 10;
         }
 
         if(isMoving == false)

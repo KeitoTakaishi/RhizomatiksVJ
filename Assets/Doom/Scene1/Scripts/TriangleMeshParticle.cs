@@ -138,6 +138,27 @@ public class TriangleMeshParticle : MonoBehaviour
 
     }
 
+    private void OnDisable()
+    {
+        if(positionBuffer != null)
+        {
+            positionBuffer.Release();
+            positionBuffer = null;
+        }
+
+        if(normalBuffer != null)
+        {
+            normalBuffer.Release();
+            normalBuffer = null;
+        }
+
+        if(lifeBuffer != null)
+        {
+            lifeBuffer.Release();
+            lifeBuffer = null;
+        }
+    }
+
 
     private void OnDestroy()
     {

@@ -34,6 +34,11 @@ namespace BoidsSimulationOnGPU
 
         public Vector3 WallCenter = Vector3.zero;
         public Vector3 WallSize = new Vector3(32.0f, 32.0f, 32.0f);
+
+
+        [SerializeField] float KickMaxSpeed;
+        [SerializeField] float KickMaxSteerForce;
+        [SerializeField] float KcikSeparateWeight;
         #endregion
 
         #region Built-in Resources
@@ -75,11 +80,24 @@ namespace BoidsSimulationOnGPU
 
         void Update()
         {
+            if(OscData.kick == 1.0f)
+            {
+                MaxSpeed = KickMaxSpeed;
+                MaxSteerForce = KickMaxSteerForce;
+                SeparateWeight = KcikSeparateWeight;
+            }else if(OscData.kick == 0.0f)
+            {
+                MaxSpeed = 5.0f;
+                MaxSteerForce = 3.0f;
+                SeparateWeight = 3.0f;
+            }
+
             Simulation();
         }
 
         void OnDestroy()
         {
+            //Debug.Log("destorpo");
             ReleaseBuffer();
         }
 

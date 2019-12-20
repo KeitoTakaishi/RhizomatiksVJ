@@ -5,7 +5,10 @@ using UnityEngine;
 public class GPUPolygonTrailSceneManager : MonoBehaviour
 {
     [SerializeField] GameObject GpuPolygonTrail;
+    [SerializeField] GameObject crossesObj;
+    AudioReactiveCrossScale cross;
 
+    [SerializeField] GameObject[] particleSystem;
 
     void ResetParameters()
     {
@@ -16,6 +19,7 @@ public class GPUPolygonTrailSceneManager : MonoBehaviour
     void Start()
     {
         ResetParameters();
+        cross = crossesObj.GetComponent<AudioReactiveCrossScale>();
     }
 
     void Update()
@@ -23,6 +27,12 @@ public class GPUPolygonTrailSceneManager : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.Q))
         {
             GpuPolygonTrail.SetActive(true);
-        }    
+        } else if(Input.GetKeyDown(KeyCode.W))
+        {
+            cross.isRotate = true;
+        } else if(Input.GetKeyDown(KeyCode.E))
+        {
+            particleSystem[0].SetActive(true);
+        }
     }
 }

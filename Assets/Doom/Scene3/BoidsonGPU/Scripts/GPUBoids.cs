@@ -179,6 +179,16 @@ public class GPUBoids : MonoBehaviour
          
     }
 
+    private void OnDisable()
+    {
+        ReleaseBuffer();
+    }
+
+
+    private void OnDestroy()
+    {
+        ReleaseBuffer();
+    }
     void ReleaseBuffer()
     {
         if (_boidDataBuffer != null)
