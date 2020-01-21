@@ -1,0 +1,55 @@
+﻿#include "../Noise4d.cginc"
+#define THREAD [numthreads(64, 1, 1)]
+
+#pragma kernel Init
+#pragma kernel Update
+
+RWStructuredBuffer<float3> positionBuffer;
+RWStructuredBuffer<float3> emitPosBuffer;
+RWStructuredBuffer<float3> lifeBuffer;
+float dt;
+float time;
+float power;
+
+THREAD
+void Init(uint2 id : SV_DispatchThreadID)
+{
+	int i = id.x;
+	float3 pos = positionBuffer[i];
+	float3 init = emitPosBuffer[i];
+	positionBuffer[i] = init;
+
+}
+
+
+
+THREAD
+void Update(uint2 id : SV_DispatchThreadID)
+{
+	int i = id.x;
+	float3 pos = positionBuffer[i];
+	float3 init = emitPosBuffer[i];
+	float3 life = lifeBuffer[i];
+
+	//dead
+	
+	if (life.z == 0) {
+		pos = init;
+		life = float3(life.y, life.y, 1.0);
+	}
+	else {
+		if (life.x < 0.0) {
+			life.z = 0.0;
+		}
+		else {
+			
+			pos +=	(power+0.1)*curlNoise(float4(pos.x * 0.1, pos.y * 0.1, pos.z * 0.1, time));
+			life.x -= dt;
+		}
+
+	}
+	lifeBuffer[i] = life;
+	positionBuffer[i] = pos;
+	
+}
+

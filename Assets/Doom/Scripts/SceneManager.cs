@@ -10,6 +10,7 @@ namespace DoomScene
         #region public data
         public int curSectionID = 1;
         public CameraAnimation camAnim;
+        public CameraController camCon;
         #endregion
 
         #region firstSection data
@@ -86,7 +87,8 @@ namespace DoomScene
         {
             //Debug.Log("Start");
             curSectionID = 1;
-            camAnim.target = wireFarmeSphere.transform;
+            //camAnim.target = wireFarmeSphere.transform;
+            camCon.target = wireFarmeSphere.transform;
             if (wireFrameMat == null)
             {
                 wireFrameMat = wireFarmeSphere.GetComponent<MeshRenderer>().material;
@@ -179,7 +181,8 @@ namespace DoomScene
                     //prismParticle.SetActive(false);
                     //triangleMeshParticle.SetActive(false);
                     //polygonParticle.SetActive(true);
-                    camAnim.target = trailParticleSyste03.transform;
+                    //camAnim.target = trailParticleSyste03.transform;
+                    camCon.target = trailParticleSyste03.transform;
                     RenderSettings.skybox = defaultSkyBox;
                 }
 
@@ -213,6 +216,7 @@ namespace DoomScene
                     thirdSection.SetActive(false);
                     fourthSection.SetActive(true);
                     camAnim.target = walkingModel.transform;
+                    camCon.target = walkingModel.transform;
                     RenderSettings.skybox = defaultSkyBox;
                     //polygonParticle.SetActive(false);
                     curSectionID = 4;
@@ -235,7 +239,12 @@ namespace DoomScene
                     ab.enabled = true;
                     fourthSection.SetActive(false);
                     fifthSection.SetActive(true);
-                    camAnim.target = fifthSectionCamTarget.transform;
+
+                    //camCon.enabled = false;
+                    //camAnim.enabled = true;
+                    //camAnim.target = fifthSectionCamTarget.transform;
+                    camCon.target = fifthSectionCamTarget.transform;
+
                     curSectionID = 5;
                 }
             } else if(curSectionID == 5)

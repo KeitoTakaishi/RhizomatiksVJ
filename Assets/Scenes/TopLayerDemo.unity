@@ -112,6 +112,29 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &201684299 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3074324619680056913, guid: 4d730165db0a3d3439f6f6f4ef48b059,
+    type: 3}
+  m_PrefabInstance: {fileID: 3074324621633481737}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &201684300
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 201684299}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed64613a8196e8641b841ab07fa346f5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  center: {x: 0.5, y: 0.5}
+  power: 0
+  material: {fileID: 2100000, guid: 2e5eea38f5170f04c85253e1d8f75daf, type: 2}
+  maxradiationBlurPower: 0
+  radiationBlurEffectTime: 0
 --- !u!1 &599085656
 GameObject:
   m_ObjectHideFlags: 0
@@ -446,5 +469,10 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3074324619680056915, guid: 4d730165db0a3d3439f6f6f4ef48b059,
+        type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 2100000, guid: 2e5eea38f5170f04c85253e1d8f75daf, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4d730165db0a3d3439f6f6f4ef48b059, type: 3}

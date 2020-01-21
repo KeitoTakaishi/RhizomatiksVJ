@@ -89,7 +89,7 @@ MonoBehaviour:
     value: 0
   keyValue:
     overrideState: 1
-    value: 1
+    value: 1.5
   eyeAdaptation:
     overrideState: 0
     value: 0
@@ -152,7 +152,7 @@ MonoBehaviour:
     value: 1
   temperature:
     overrideState: 1
-    value: -2
+    value: -10
   tint:
     overrideState: 0
     value: 0
@@ -1428,10 +1428,10 @@ MonoBehaviour:
     value: 1
   intensity:
     overrideState: 1
-    value: 1.71
+    value: 1.89
   threshold:
     overrideState: 1
-    value: 0.35
+    value: 0.43
   softKnee:
     overrideState: 0
     value: 0.5

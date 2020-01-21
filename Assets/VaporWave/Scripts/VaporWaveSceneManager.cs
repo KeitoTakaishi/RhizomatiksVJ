@@ -19,7 +19,8 @@ public class VaporWaveSceneManager : MonoBehaviour
     [SerializeField] private GameObject ring;
     [SerializeField] private GameObject triangleMeshParticleSystem;
     [SerializeField] private GameObject Statue;
-
+    [SerializeField] private GameObject gpuParticleSystem;
+    ModelEmitGPUParticle modelEmit;
     #endregion
 
     #region material data
@@ -27,6 +28,7 @@ public class VaporWaveSceneManager : MonoBehaviour
     [SerializeField] private Material floorEffect;
     [SerializeField] private Material statueModelMaterial;
     [SerializeField] private Material DissolveMaterial;
+    
     #endregion
 
     #region mode
@@ -39,6 +41,7 @@ public class VaporWaveSceneManager : MonoBehaviour
         gpuTrailBarcode.SetActive(false);
         floor.GetComponent<MeshRenderer>().material = floorDefault;
         triangleMeshParticleSystem.SetActive(false);
+        modelEmit = gpuParticleSystem.GetComponent<ModelEmitGPUParticle>();
     }
 
     void Start()
@@ -91,5 +94,12 @@ public class VaporWaveSceneManager : MonoBehaviour
                 triangleMeshParticleSystem.SetActive(true);
             }
         }
+
+        else if(Input.GetKeyDown(KeyCode.U)) 
+        {
+            //gpuParticleSystem.SetActive(true);
+            modelEmit.isUpdate = true;
+        }
+
     }
 }

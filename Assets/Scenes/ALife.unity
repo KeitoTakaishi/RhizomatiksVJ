@@ -1110,9 +1110,9 @@ MonoBehaviour:
   AvoidWallWeight: 10
   WallCenter: {x: 0, y: 0, z: 0}
   WallSize: {x: 32, y: 32, z: 32}
-  KickMaxSpeed: 350
-  KickMaxSteerForce: 200
-  KcikSeparateWeight: 70
+  KickMaxSpeed: 40
+  KickMaxSteerForce: 30
+  KcikSeparateWeight: 20
   BoidsCS: {fileID: 7200000, guid: 72486033123b3da4780367799dd20306, type: 3}
 --- !u!4 &1394806170
 Transform:
@@ -1275,6 +1275,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4890697295891558731, guid: e572650a65716d142abbaad04f2c8f28,
+        type: 3}
+      propertyPath: _threshould
+      value: 0.68
+      objectReference: {fileID: 0}
     - target: {fileID: 2501262592799230996, guid: e572650a65716d142abbaad04f2c8f28,
         type: 3}
       propertyPath: m_ClearFlags
@@ -1300,21 +1305,16 @@ PrefabInstance:
       propertyPath: displacementEffectTime
       value: 0.5
       objectReference: {fileID: 0}
-    - target: {fileID: 2501262592799230997, guid: e572650a65716d142abbaad04f2c8f28,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4890697295891558731, guid: e572650a65716d142abbaad04f2c8f28,
-        type: 3}
-      propertyPath: _threshould
-      value: 0.68
-      objectReference: {fileID: 0}
     - target: {fileID: 9124153542995124519, guid: e572650a65716d142abbaad04f2c8f28,
         type: 3}
       propertyPath: displacementTexture
       value: 
       objectReference: {fileID: 2800000, guid: c83e1619359d6d34ea290979348935d7, type: 3}
+    - target: {fileID: 2501262592799230997, guid: e572650a65716d142abbaad04f2c8f28,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e572650a65716d142abbaad04f2c8f28, type: 3}
 --- !u!1 &1584813060

@@ -8,7 +8,7 @@ public class CameraController : MonoBehaviour
     #region private data
     [SerializeField] bool isMidiIn;
     Camera camera;
-    [SerializeField] Transform target;
+    [SerializeField] public Transform target;
     [SerializeField] int moveTimeLength = 60; //何秒かけて目的地まで行くか
     [SerializeField] float radius;
     int curTime = 0;
@@ -23,6 +23,8 @@ public class CameraController : MonoBehaviour
 
     //[SerializeField] JitterMotion jitterMotion;
     //[SerializeField] ConstantMotion constantMotion;
+
+    bool isAuto = false;
     #endregion
 
    
@@ -55,6 +57,10 @@ public class CameraController : MonoBehaviour
 
     void Update()
     {
+        if(Input.GetKeyDown(KeyCode.N))
+        {
+            isAuto = !isAuto;
+        }
 
         if(isMidiIn)
         {
@@ -68,25 +74,53 @@ public class CameraController : MonoBehaviour
             //constantMotion.enabled = true;
             //jitterMotion.enabled = true;
             //if(MidiReciever.notes[0] ||Input.GetKeyDown(KeyCode.A) || (target.position - this.transform.position).magnitude > 0.0f)
-            if(MidiReciever.notes[0] ||Input.GetKeyDown(KeyCode.A))
+
+            if(!isAuto)
             {
-                //constantMotion.enabled = false;
-                //jitterMotion.enabled = false;
-                isMoving = true;
-                t = v = 0;
-                curTime = 0;
-                startPosition = camera.transform.position;
-
-                if(Random.Range(0.0f, 1.0f) < 0.95f) {
-                    nextPosition = SpereRandomNextPos(radius);
-                } else
+                if(Input.GetKeyDown(KeyCode.A))
                 {
-                    nextPosition = ForwardNextPos();
+                    //constantMotion.enabled = false;
+                    //jitterMotion.enabled = false;
+                    isMoving = true;
+                    t = v = 0;
+                    curTime = 0;
+                    startPosition = camera.transform.position;
+
+                    if(Random.Range(0.0f, 1.0f) < 0.95f)
+                    {
+                        nextPosition = SpereRandomNextPos(radius);
+                    } else
+                    {
+                        nextPosition = ForwardNextPos();
+                    }
+
+
+                    dir = nextPosition - startPosition;
+
                 }
-                
+            } else
+            {
+                if(OscData.kick == 1.0)
+                {
+                    //constantMotion.enabled = false;
+                    //jitterMotion.enabled = false;
+                    isMoving = true;
+                    t = v = 0;
+                    curTime = 0;
+                    startPosition = camera.transform.position;
 
-                dir = nextPosition - startPosition;
+                    if(Random.Range(0.0f, 1.0f) < 0.95f)
+                    {
+                        nextPosition = SpereRandomNextPos(radius);
+                    } else
+                    {
+                        nextPosition = ForwardNextPos();
+                    }
 
+
+                    dir = nextPosition - startPosition;
+
+                }
             }
 
             
