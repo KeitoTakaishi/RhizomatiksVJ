@@ -31,12 +31,12 @@ public class SceneLoader : MonoBehaviour
     {
         
         //if(Input.GetKeyDown(sceneKey[0]))
-        if(OscData.scene == 1)
+        if(OscData.scene == 1 || Input.GetKeyDown(sceneKey[0]))
         {
             SceneManager.LoadScene("VaporWave");
         }
         //else if(Input.GetKeyDown(sceneKey[1]))
-        else if(OscData.scene == 2)
+        else if(OscData.scene == 2 || Input.GetKeyDown(sceneKey[1]))
         {
             SceneManager.LoadScene("ALife");
         }
