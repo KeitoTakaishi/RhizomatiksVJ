@@ -33,7 +33,8 @@ public class SceneLoader : MonoBehaviour
         //if(Input.GetKeyDown(sceneKey[0]))
         if(OscData.scene == 1 || Input.GetKeyDown(sceneKey[0]))
         {
-            SceneManager.LoadScene("VaporWave");
+            ///SceneManager.LoadScene("VaporWave");
+            SceneManager.LoadScene("DCGAN");
         }
         //else if(Input.GetKeyDown(sceneKey[1]))
         else if(OscData.scene == 2 || Input.GetKeyDown(sceneKey[1]))

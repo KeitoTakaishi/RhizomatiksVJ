@@ -12,6 +12,7 @@ static public class OscData
     public static float rythm;
     public static float snare;
     public static float scene;
+    public static float brightWhiteNoise;
 
     /*
     public OscData(float l, float k, float r, float s)
@@ -120,6 +121,15 @@ public class OSCManager : MonoBehaviour
                     OscData.scene = 5;
                 }
                 break;
+
+            case "/brightWhiteNoise":
+                //Debug.Log(float.Parse(message.values[0].ToString()));
+                OscData.brightWhiteNoise = float.Parse(message.values[0].ToString());
+
+
+                break;
+
+
         }
 
         //Debug.Log(OscData.scene);
