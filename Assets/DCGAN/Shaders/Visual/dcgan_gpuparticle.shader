@@ -18,6 +18,8 @@
 			#pragma instancing_options procedural:setup
 			#pragma target 3.0
 			#include "Assets/ShaderUtils/utils.cginc"
+			#include "Assets/ShaderUtils/NoiseUtils.cginc"
+
 
 			sampler2D _MainTex;
 
@@ -54,7 +56,7 @@
 	#endif
 			}
 
-
+			float whiteNoise3;
 			void vert(inout appdata v, out Input o) {
 				UNITY_INITIALIZE_OUTPUT(Input, o);
 	#ifdef UNITY_PROCEDURAL_INSTANCING_ENABLED
@@ -80,20 +82,16 @@
 				x = (x * 2.0 - n)/2.0;
 				y = (y * 2.0 - n)/2.0;
 				
-
-				float scale = paramsBuffer[_instanceID].life.x * 0.5;
+				//scale
+				float scale = paramsBuffer[_instanceID].life.x;
 				vert.xyz *= scale;
+				//TDAbleton
+				vert.xyz *= float3(1.0, 1.0, whiteNoise3 * 50.0 * rnd(float2(x, y)));
 				
+				//vert = mul(MultiRotationMatrix(float3(scale.xxx * 5.0)), vert);
 				float3 position = paramsBuffer[_instanceID].pos;
 				vert = mul(TranslateMatrix(position), vert);
-
-				
-				
-				
 				v.vertex = vert;
-				
-
-		
 	#endif
 			}
 

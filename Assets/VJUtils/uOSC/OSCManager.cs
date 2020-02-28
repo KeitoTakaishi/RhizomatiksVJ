@@ -13,6 +13,8 @@ static public class OscData
     public static float snare;
     public static float scene;
     public static float brightWhiteNoise;
+    public static float whiteNoise3;
+    public static float cawbel;
 
     /*
     public OscData(float l, float k, float r, float s)
@@ -123,10 +125,17 @@ public class OSCManager : MonoBehaviour
                 break;
 
             case "/brightWhiteNoise":
-                //Debug.Log(float.Parse(message.values[0].ToString()));
+                
                 OscData.brightWhiteNoise = float.Parse(message.values[0].ToString());
+                break;
 
+            case "/whiteNoise3":
+                OscData.whiteNoise3 = float.Parse(message.values[0].ToString());
+                break;
 
+            case "/cawbel":
+                
+                OscData.cawbel = float.Parse(message.values[0].ToString());
                 break;
 
 

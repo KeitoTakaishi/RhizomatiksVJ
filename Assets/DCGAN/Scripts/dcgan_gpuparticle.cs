@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Runtime.InteropServices;
-
+using DG.Tweening;
 
 public class dcgan_gpuparticle : MonoBehaviour
 {
@@ -35,19 +35,35 @@ public class dcgan_gpuparticle : MonoBehaviour
     #endregion
 
 
+
+    public bool calcFlag = false; 
+
     void Start()
     {
         InitInstancingParameter();
         CreateComputeBuffer();
         kernel = cs.FindKernel("init");
+        cs.SetBuffer(kernel, "parames", parameterBuffer);
+        cs.Dispatch(kernel, instancingCount / 64, 1, 1);
+
+        
+   
     }
 
     void Update()
     {
-        cs.SetFloat("dt", Time.deltaTime);
-        cs.SetFloat("time", Time.realtimeSinceStartup);
-        cs.SetBuffer(kernel, "parames", parameterBuffer);
-        cs.Dispatch(kernel, instancingCount/64, 1, 1);
+        if(calcFlag)
+        {
+            kernel = cs.FindKernel("update");
+            cs.SetFloat("dt", Time.deltaTime);
+            cs.SetFloat("time", Time.realtimeSinceStartup);
+            cs.SetBuffer(kernel, "parames", parameterBuffer);
+            cs.Dispatch(kernel, instancingCount / 64, 1, 1);
+        }
+
+
+        //DOTween.To(() => piyo, (x) => piyo = x, tgt, time).SetEase(Ease.InOutSine)
+        instancingMat.SetFloat("whiteNoise3", OscData.whiteNoise3);
         instancingMat.SetBuffer("paramsBuffer", parameterBuffer);
         Graphics.DrawMeshInstancedIndirect(srcMesh, 0, instancingMat, new Bounds(Vector3.zero, Vector3.one * 32.0f), argsBuffer);
     }

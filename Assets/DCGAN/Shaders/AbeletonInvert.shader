@@ -1,9 +1,8 @@
-﻿Shader "Unlit/AbeletonScaneLine"
+﻿Shader "Unlit/AbeltonInvert"
 {
     Properties
     {
         _MainTex ("Texture", 2D) = "white" {}
-		_NoisePower("NoisePower", Float) = 0.0
     
 	}
     SubShader
@@ -49,21 +48,19 @@
             }
 
 
-			float _NoisePower;
-			float brightWhiteNoise;
+			
+			float _cawbel;
             fixed4 frag (v2f i) : SV_Target
             {
 				float2 uv = i.uv;
-				uv.y = 1.0 - uv.y;
-                
-				//float3 noise = snoise3D(float4(i.uv.x, i.uv.y, _Time.y, 0.0));
-				//noise.xy *= _NoisePower;
-				//uv += noise.xy;
-				//uv = frac(uv);
-				uv.x = smoothstep(0.0 , 1.0 , uv.x + brightWhiteNoise) ;
-				fixed4 col = tex2D(_MainTex, uv);
+				//uv.x = step(uv.x + 0.5 * _brightWhiteNoise);
+				//uv.x = smoothstep(0.0, 1.0 - _brightWhiteNoise, uv.x);
 			
-				//UNITY_APPLY_FOG(i.fogCoord, col);
+				fixed4 col = tex2D(_MainTex, uv);
+				
+				if (_cawbel == 1.0) {
+					col.rgb = float3(_cawbel.xxx) - col.rgb;
+				}
                 return col;
             }
             ENDCG

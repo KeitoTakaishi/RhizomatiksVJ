@@ -1,4 +1,5 @@
 ﻿#pragma kernel init
+#pragma kernel update
 #include "../../../ShaderUtils/Noise4d.cginc"
 struct Params {
 	float3 pos;
@@ -13,9 +14,9 @@ float dt;
 //void init (uint3 id : SV_DispatchThreadID)
 void init(uint id : SV_DispatchThreadID)
 {
-
 	float2 life = parames[id].life;
 	float3 p = parames[id].pos;
+	/*
 	if (life.x < 0.0) {
 		float n = 128.0;
 		float x = fmod( (float)(id), n);
@@ -29,8 +30,9 @@ void init(uint id : SV_DispatchThreadID)
 	else {
 		life.x -= dt;
 		float scale = 0.2;
-		p += curlNoise(float4(p.x * scale, p.y * scale, p.z * scale, time*0.1)) * 0.2 * exp(life.y - life.x);
+		p += curlNoise(float4(p.x*scale, p.y*scale, p.z*scale, time*0.1)) * 0.2 * exp(life.y - life.x);
 	}
+	*/
 	
 	
 	parames[id].pos = p;
@@ -38,3 +40,29 @@ void init(uint id : SV_DispatchThreadID)
 
 }
 
+
+[numthreads(64, 1, 1)]
+void update(uint id : SV_DispatchThreadID)
+{
+	float2 life = parames[id].life;
+	float3 p = parames[id].pos;
+	if (life.x < 0.0) {
+		float n = 128.0;
+		float x = fmod((float)(id), n);
+		x = (x * 2.0 - n) / 2.0;
+		float y = ((float)(id) / n);
+		y = (y * 2.0 - n) / 2.0;
+		p = float3(x, y, 0.0);
+		//p = float3(0.0.xxx);
+		life.x = life.y;
+	}
+	else {
+		life.x -= dt;
+		float scale = 0.2;
+		p += curlNoise(float4(p.x*scale, p.y*scale, p.z*scale, time*0.1)) * 0.2 * exp(life.y - life.x);
+	}
+
+
+	parames[id].pos = p;
+	parames[id].life = life;
+}

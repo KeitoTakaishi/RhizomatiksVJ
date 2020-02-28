@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Debug
-  m_Shader: {fileID: 4800000, guid: e2e274ee53c3ef142b90c3e51dbf3b58, type: 3}
+  m_Name: AbeletonDefault
+  m_Shader: {fileID: 4800000, guid: 1d4c61d030eeb964f8d21c32d22a539a, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0

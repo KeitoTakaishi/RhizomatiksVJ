@@ -1,4 +1,4 @@
-﻿Shader "Unlit/AbeletonScaneLine"
+﻿Shader "Unlit/AbeletonDefault"
 {
     Properties
     {
@@ -49,21 +49,15 @@
             }
 
 
-			float _NoisePower;
-			float brightWhiteNoise;
+			
+			
             fixed4 frag (v2f i) : SV_Target
             {
 				float2 uv = i.uv;
-				uv.y = 1.0 - uv.y;
-                
-				//float3 noise = snoise3D(float4(i.uv.x, i.uv.y, _Time.y, 0.0));
-				//noise.xy *= _NoisePower;
-				//uv += noise.xy;
-				//uv = frac(uv);
-				uv.x = smoothstep(0.0 , 1.0 , uv.x + brightWhiteNoise) ;
-				fixed4 col = tex2D(_MainTex, uv);
+				//uv.x = step(uv.x + 0.5 * _brightWhiteNoise);
+				//uv.x = smoothstep(0.0, 1.0 - _brightWhiteNoise, uv.x);
 			
-				//UNITY_APPLY_FOG(i.fogCoord, col);
+				fixed4 col = tex2D(_MainTex, uv);
                 return col;
             }
             ENDCG

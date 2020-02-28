@@ -38,7 +38,7 @@ public class VaporWavePostPro : MonoBehaviour
 
     void OnRenderImage(RenderTexture src, RenderTexture dst)
     {
-        Debug.Log("post");
+        //Debug.Log("post");
         Graphics.Blit(src, dst, mat);
     }
 }
